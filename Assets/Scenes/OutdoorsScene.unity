@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 138470636}
   - component: {fileID: 138470635}
   - component: {fileID: 138470634}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1082,6 +1082,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::S_PlayerController
   moveSpeed: 7
   orientation: {fileID: 1563665623}
+  groundDrag: 5
+  playerHeight: 2
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!1 &1563665622
 GameObject:
   m_ObjectHideFlags: 0

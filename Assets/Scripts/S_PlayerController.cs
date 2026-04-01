@@ -7,12 +7,20 @@ public class S_PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private Transform orientation;
 
+    [SerializeField] private float groundDrag;
+
+    [SerializeField] private float playerHeight;
+    [SerializeField] private LayerMask whatIsGround;
+    private bool isGrounded;
+
     float horInput;
     float verInput;
 
     Vector3 moveDirection;
 
     Rigidbody rb;
+
+
 
     private InputSystem_Actions actions;
 
@@ -39,7 +47,17 @@ public class S_PlayerController : MonoBehaviour
 
     void Update()
     {
+
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+
         MyInput();
+
+        if (isGrounded)
+            rb.linearDamping = groundDrag;
+        else
+            rb.linearDamping = 0;
+
+        SpeedControl();
     }
 
     void FixedUpdate()
@@ -60,6 +78,17 @@ public class S_PlayerController : MonoBehaviour
         moveDirection = orientation.forward * verInput + orientation.right * horInput;
 
         rb.AddForce(moveDirection.normalized * moveSpeed * 10, ForceMode.Force);
+    }
+
+    void SpeedControl()
+    {
+        Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+
+        if(flatVelocity.magnitude > moveSpeed)
+        {
+            Vector3 limitedVelocity = flatVelocity.normalized * moveSpeed;
+            rb.linearVelocity = new Vector3(limitedVelocity.x, rb.linearVelocity.y, limitedVelocity.z);
+        }
     }
 }
  
