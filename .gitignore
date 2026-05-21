@@ -67,6 +67,22 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# ========== Python / RL ==========
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+tower_env/
+.env
+python/models/*.zip
+python/models/*.pt
+*.pt
+*.zip
+.ipynb_checkpoints/
+*.egg-info/
+dist/
+*.egg
+
 # Packed Addressables
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 

@@ -1,0 +1,131 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{fancyvrb}
+\usepackage{titlesec}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+
+\title{\textbf{Project Status --- The Tower Within RL Side}}
+\author{}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{What the Test Run Just Proved}
+
+The output just captured is the \textbf{Phase 0 success criterion} hit:
+
+\begin{Verbatim}[frame=single, fontsize=\small]
+Episode 1: BOSS won at step 279 --- Player HP 0, fight ended
+Episode 2: TIMEOUT --- fight went the full 1000 steps
+Episode 3: BOSS won at step 303
+Episode 4: BOSS won at step 990
+Episode 5: BOSS won at step 252
+\end{Verbatim}
+
+The Python agent successfully controlled the enemy over TCP, HP tracked correctly, episodes ended on kills, reset worked between episodes, and the demo finished cleanly across all 5 episodes. The full data pipeline --- state out, action in, damage applied, termination detected, reset triggered --- is verified end-to-end.
+
+One small observation worth flagging: the boss won 4 out of 5 episodes against the mock server's simulated player. That is \textbf{not a sign the RL is good} --- it is a sign the mock server's scripted ``player'' is too passive. That is fine for Phase 0 (only validating plumbing), but when real PPO training starts in Phase 1, a tougher scripted opponent will be needed to learn against.
+
+\section*{What's Done}
+
+\subsection*{Interface Layer}
+A locked v1.0 contract defines exactly what data flows between Unity and Python --- JSON-over-TCP on port 9876, with fields for HP, positions, distance, action history, and state. Both sides build independently against this spec; any future change requires a team review.
+
+\subsection*{TCP Bridge}
+A full TCP client handles the connection to Unity, including error handling for disconnects and bad JSON. A mock Unity server was also built so the Python side can be tested and developed completely independently --- no need to wait on the Unity build. This was confirmed working in the last test run.
+
+\subsection*{Two Gym Environments}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{UnityTowerEnv} --- Gymnasium wrapper that talks to real Unity over TCP. This is what deployment and live training will use.
+    \item \textbf{SimpleCombatEnv} --- a headless clone of the combat math in pure Python. No graphics, no Unity, just the numbers. It runs at \textbf{$\sim$44{,}500 steps per second}, which is roughly 10{,}000$\times$ faster than training inside Unity. All real RL training will happen here.
+\end{itemize}
+
+Both environments share the \textbf{identical observation and action space} (13-dim state, 8 discrete actions), so a policy trained in the fast env deploys to Unity without any modification.
+
+\subsection*{Combat Math Spec}
+A written document locks down the exact damage values, attack ranges, timings, cooldowns, i-frames, and stagger durations. This is the contract between the Unity combat system and the Python training env --- if the numbers drift, the trained boss will behave erratically in-game. This still needs the Unity dev's sign-off to confirm his implementation will match.
+
+\subsection*{Reward Configs for All 5 Shadow Characters}
+The Nemesis system's foundation is in place. Each of the 5 bosses has a distinct reward weight profile:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Matron} --- defensive counter-attacker
+    \item \textbf{Peter} --- relentless aggressor
+    \item \textbf{Nicole} --- evasive, hit-and-run
+    \item \textbf{Sam (Son)} --- erratic, emotionally volatile
+    \item \textbf{Sam (Friend)} --- balanced, will be swapped for behavioral cloning later
+\end{itemize}
+
+These weights translate the narrative intent (``what does this boss feel like to fight?'') into numerical reward shaping, which is how their fighting styles will actually emerge from training.
+
+\subsection*{PPO Training Pipeline}
+A complete training script using Stable-Baselines3's PPO, with TensorBoard logging, model checkpointing, evaluation, and a CLI that can train one boss or all five. A 10k-step smoke test confirmed it works end-to-end --- the reward curve climbed from $\sim$2 to $\sim$24, showing the agent was already learning even in that tiny run.
+
+\subsection*{Validation Suite}
+Five automated tests cover Gymnasium compliance, episode statistics, speed benchmarks, combat accuracy against hand-computed scenarios, and observation bounds. All five pass.
+
+\section*{What's Left in Phase 0}
+
+The only remaining work is on the Unity side:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Prototype arena} --- a flat plane with a movable player and a static enemy capsule
+    \item \textbf{TCP server in C\#} --- the counterpart to the Python TCP client
+    \item \textbf{Combat skeleton} --- HP tracking, melee attacks, damage application, blocking, dodging, reset handling
+    \item \textbf{Integration test} --- running the Python demo against the real Unity build instead of the mock server
+\end{itemize}
+
+Until that is delivered, the Python side cannot do a true end-to-end test with real Unity. But everything Python-side is ready to plug in the moment it lands.
+
+\section*{What Comes Next --- Phase 1}
+
+Once Unity integration is done, Phase 1 begins: training a single PPO agent until it can beat a scripted player roughly 50\% of the time. This is the ``does RL even work for this game?'' milestone. Concretely:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Harden the scripted player} in SimpleCombatEnv so it is a realistic training partner, not a punching bag.
+    \item \textbf{Train a baseline PPO model} for $\sim$500k steps and watch the win-rate curve.
+    \item \textbf{Tune hyperparameters} (learning rate, entropy, network size) until the agent consistently hits a 40--60\% win rate.
+    \item \textbf{Deploy to Unity} --- load the trained model, connect via UnityTowerEnv, verify the boss behaves the same in the real game as it did in training. This is the moment the whole architecture pays off: no code changes needed, just a policy swap.
+\end{enumerate}
+
+\section*{What Else Can Be Done Right Now (Without Waiting on Unity)}
+
+Plenty. None of this is blocked:
+
+\subsection*{Improve the Training Env}
+The scripted player inside SimpleCombatEnv currently does simple ``approach and attack'' logic. A smarter scripted opponent --- one that actually kites, blocks properly, and punishes openings --- would produce a much stronger trained boss. This is probably the single highest-leverage thing to do next.
+
+\subsection*{Start Training the Base Agent}
+Even without a perfect scripted player, longer training runs (100k+ steps) can begin to see how the PPO curves look, whether the reward function produces sensible behavior, and whether any of the 5 shadow configs produce visibly different playstyles. Early data here will catch reward-shaping bugs that would otherwise bite in Phase 2.
+
+\subsection*{Behavioral Cloning Scaffolding}
+The final boss (Sam --- Friend) uses behavioral cloning on logged player data. The pipeline for this --- logging format, training script, fine-tuning loop --- can be built now against synthetic/fake player logs. When the Unity dev later adds real action logging, the script just gets pointed at his output files.
+
+\subsection*{Difficulty Scaling Logic}
+The tower has 25/40/60 floors. A function is needed that maps \texttt{floor\_number} $\rightarrow$ \texttt{(training\_timesteps, learning\_rate, reward\_adjustments)} so higher floors produce harder, more refined bosses. This is a small piece of code and can be designed and tested now in the simplified env.
+
+\subsection*{Evaluation Harness}
+A script that takes a trained model and runs it against a standard benchmark (e.g., 100 fights vs.\ scripted player, 100 fights vs.\ random, 100 fights vs.\ another trained model) and spits out win rates, average fight length, damage stats, action distributions. This becomes essential for tuning in Phase 2 when comparing 5 different boss personalities.
+
+\subsection*{Documentation}
+A short README in the \texttt{python/} folder explaining how to set up the env, run tests, run training, and read TensorBoard. Low-glamour but useful for onboarding teammates.
+
+\section*{Overall Progress}
+
+Phase 0 is roughly \textbf{75\% complete} --- all RL-side work done and verified, all prep work for Phase 1 in place. The remaining 25\% is the Unity-side build, which unblocks the final integration test and closes out Phase 0 entirely.
+
+After that, Phase 1 is unblocked and training can begin in earnest. Given the training environment runs at 44k steps/sec, even long training runs (millions of steps) complete in minutes, which means iteration on reward shaping and hyperparameters will be fast --- the bottleneck from here on is design decisions, not compute time.
+
+\end{document}

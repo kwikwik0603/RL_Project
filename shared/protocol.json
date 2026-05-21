@@ -1,0 +1,46 @@
+{
+  "version": "1.0.0",
+  "description": "Interface contract between Unity (C# TCP server) and Python (RL client)",
+  "connection": {
+    "protocol": "TCP",
+    "host": "localhost",
+    "port": 9876,
+    "encoding": "UTF-8",
+    "delimiter": "\n",
+    "unity_role": "server",
+    "python_role": "client"
+  },
+  "state_message": {
+    "direction": "Unity -> Python",
+    "frequency": "every 0.2 seconds during combat",
+    "fields": {
+      "player_hp": {"type": "float", "range": [0.0, 1.0], "description": "Player health, normalized (1.0 = full)"},
+      "boss_hp": {"type": "float", "range": [0.0, 1.0], "description": "Boss health, normalized"},
+      "player_pos": {"type": "float[2]", "range": [0.0, 1.0], "description": "Player (x, y) normalized to arena bounds"},
+      "boss_pos": {"type": "float[2]", "range": [0.0, 1.0], "description": "Boss (x, y) normalized to arena bounds"},
+      "distance": {"type": "float", "range": [0.0, 1.0], "description": "Euclidean distance, normalized by arena diagonal"},
+      "player_last_actions": {"type": "int[3]", "range": [0, 7], "description": "Last 3 player action IDs"},
+      "player_state": {"type": "int", "range": [0, 4], "description": "0=idle, 1=attacking, 2=blocking, 3=dodging, 4=staggered"},
+      "floor_number": {"type": "int", "range": [1, 60], "description": "Current tower floor"},
+      "boss_id": {"type": "int", "range": [0, 4], "description": "0=Matron, 1=Peter, 2=Nicole, 3=Sam(son), 4=Sam(friend)"},
+      "done": {"type": "bool", "description": "True if fight is over"}
+    }
+  },
+  "action_message": {
+    "direction": "Python -> Unity",
+    "format": {"action": "int"},
+    "actions": {
+      "0": "Move Toward Player",
+      "1": "Move Away",
+      "2": "Strafe Left",
+      "3": "Strafe Right",
+      "4": "Light Attack",
+      "5": "Heavy Attack",
+      "6": "Block",
+      "7": "Dodge"
+    }
+  },
+  "commands": {
+    "reset": {"format": {"command": "reset"}, "description": "Resets the fight: restores HP, resets positions"}
+  }
+}
