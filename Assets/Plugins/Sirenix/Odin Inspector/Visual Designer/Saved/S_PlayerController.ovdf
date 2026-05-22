@@ -1,0 +1,88 @@
+OVDF v1.1
+S_PlayerController, Assembly-CSharp
+MetaGuid:15d2006d7a0e1ca44be43acc40d54c76
+
+# $MKUEq4cSC2wyVU5b5c4KtR
+Position: $root:1
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "Movement Toggles"
+
+# $89utJKVnDZtPGRkoRLq6RM
+Position: $root:0
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "Required"
+
+# $SCMC75WypgTm9QcxP5FFug
+Position: $root:7
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "Tuneable Variables"
+
+# $KKcetXxv2nmmv3u9eCV3Wm
+Position: $SCMC75WypgTm9QcxP5FFug:0
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Ground Movement"
+
+# $SsQxbQVNh5oz2A8Vx6beVz
+Position: $SCMC75WypgTm9QcxP5FFug:1
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Ground Check"
+
+# $NGLfx24UCXdAuHeyN2NWVt
+Position: $SCMC75WypgTm9QcxP5FFug:2
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Jumping Movement"
+
+# $HWqPAenC865maZKJTALzjU
+Position: $SCMC75WypgTm9QcxP5FFug:3
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Crouching Movement"
+
+# canMove
+Position: $MKUEq4cSC2wyVU5b5c4KtR:0
+
+# orientation
+Position: $89utJKVnDZtPGRkoRLq6RM:0
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# canJump
+Position: $MKUEq4cSC2wyVU5b5c4KtR:1
+
+# canCrouch
+Position: $MKUEq4cSC2wyVU5b5c4KtR:2
+
+# canDash
+Position: $MKUEq4cSC2wyVU5b5c4KtR:3
+
+# canAttack
+Position: $MKUEq4cSC2wyVU5b5c4KtR:4
+
+# whatIsGround
+Position: $89utJKVnDZtPGRkoRLq6RM:1
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# walkSpeed
+Position: $KKcetXxv2nmmv3u9eCV3Wm:0
+
+# playerHeight
+Position: $SsQxbQVNh5oz2A8Vx6beVz:0
+
+# airMultiplier
+Position: $NGLfx24UCXdAuHeyN2NWVt:2
+
+# jumpCooldown
+Position: $NGLfx24UCXdAuHeyN2NWVt:1
+
+# jumpForce
+Position: $NGLfx24UCXdAuHeyN2NWVt:0
+
+# groundDrag
+Position: $KKcetXxv2nmmv3u9eCV3Wm:2
+
+# sprintSpeed
+Position: $KKcetXxv2nmmv3u9eCV3Wm:1
+
+# crouchSpeed
+Position: $HWqPAenC865maZKJTALzjU:0
+
+# crouchYScale
+Position: $HWqPAenC865maZKJTALzjU:1

@@ -223,13 +223,15 @@ MonoBehaviour:
   canCrouch: 1
   canDash: 1
   canAttack: 1
-  walkSpeed: 0
-  sprintSpeed: 0
+  walkSpeed: 7
+  sprintSpeed: 14
   orientation: {fileID: 5630546238191514571}
   groundDrag: 5
   jumpForce: 6
   jumpCooldown: 0.25
   airMultiplier: 0.4
+  crouchSpeed: 5
+  crouchYScale: 0.5
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
