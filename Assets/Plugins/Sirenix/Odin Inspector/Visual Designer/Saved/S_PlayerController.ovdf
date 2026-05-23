@@ -13,7 +13,7 @@ Position: $root:0
 	GroupName = "Required"
 
 # $SCMC75WypgTm9QcxP5FFug
-Position: $root:7
+Position: $root:6
 + [Sirenix.OdinInspector.FoldoutGroupAttribute]
 	GroupName = "Tuneable Variables"
 
@@ -36,6 +36,11 @@ Position: $SCMC75WypgTm9QcxP5FFug:2
 Position: $SCMC75WypgTm9QcxP5FFug:3
 + [Sirenix.OdinInspector.TitleGroupAttribute]
 	GroupName = "Crouching Movement"
+
+# $XEm8pjYF2E8iM6fMDTMg4m
+Position: $SCMC75WypgTm9QcxP5FFug:4
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Slope Movement"
 
 # canMove
 Position: $MKUEq4cSC2wyVU5b5c4KtR:0
@@ -86,3 +91,6 @@ Position: $HWqPAenC865maZKJTALzjU:0
 
 # crouchYScale
 Position: $HWqPAenC865maZKJTALzjU:1
+
+# maxSlopeAngle
+Position: $XEm8pjYF2E8iM6fMDTMg4m:0

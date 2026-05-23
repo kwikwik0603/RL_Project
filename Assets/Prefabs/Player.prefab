@@ -232,6 +232,7 @@ MonoBehaviour:
   airMultiplier: 0.4
   crouchSpeed: 5
   crouchYScale: 0.5
+  maxSlopeAngle: 40
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2

@@ -30,6 +30,11 @@ public class S_PlayerController : MonoBehaviour
     [SerializeField] private float crouchYScale;
     private float startYScale;
 
+    //slope handling
+    [SerializeField] private float maxSlopeAngle;
+    private RaycastHit slopeHit;
+    private bool exitingSlope;
+
     //ground check
     [SerializeField] private float playerHeight;
     [SerializeField] private LayerMask whatIsGround;
@@ -174,28 +179,56 @@ public class S_PlayerController : MonoBehaviour
         {
             moveDirection = orientation.forward * verInput + orientation.right * horInput;
 
-            if (isGrounded)
+            if (OnSlope() && !exitingSlope)
+            {
+                rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 20f, ForceMode.Force);
+
+                if(rb.linearVelocity.y > 0)
+                {
+                    rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+                }
+            }
+
+            else if (isGrounded)
+            {
                 rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+            }
             else if (!isGrounded)
+            {
                 rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+            }
+            
+            rb.useGravity = !OnSlope();
         }
     }
 
     //capping max movement speed
     void SpeedControl()
     {
-        Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-
-        if (flatVelocity.magnitude > moveSpeed)
+        if (OnSlope())
         {
-            Vector3 limitedVelocity = flatVelocity.normalized * moveSpeed;
-            rb.linearVelocity = new Vector3(limitedVelocity.x, rb.linearVelocity.y, limitedVelocity.z);
+            if(rb.linearVelocity.magnitude > moveSpeed)
+            {
+                rb.linearVelocity = rb.linearVelocity.normalized * moveSpeed;
+            }
+        }
+        else
+        {
+            Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+
+            if (flatVelocity.magnitude > moveSpeed)
+            {
+                Vector3 limitedVelocity = flatVelocity.normalized * moveSpeed;
+                rb.linearVelocity = new Vector3(limitedVelocity.x, rb.linearVelocity.y, limitedVelocity.z);
+            }
         }
     }
 
     //handles jumping
     void Jump()
     {
+        exitingSlope = true;
+
         if ((canJump))
         {
             //Debug.Log("Jump");
@@ -208,5 +241,22 @@ public class S_PlayerController : MonoBehaviour
     void ResetJump()
     {
         readyToJump = true;
+        exitingSlope = false;
+    }
+
+    private bool OnSlope()
+    {
+        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
+        {
+            float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            return angle < maxSlopeAngle && angle != 0;
+        }
+
+        return false;
+    }
+
+    private Vector3 GetSlopeMoveDirection()
+    {
+        return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
     }
 }
