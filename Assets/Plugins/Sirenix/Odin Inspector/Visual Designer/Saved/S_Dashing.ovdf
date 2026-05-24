@@ -1,0 +1,38 @@
+OVDF v1.1
+S_Dashing, Assembly-CSharp
+MetaGuid:938f655cb753c9d4da24521a8ea8dd53
+
+# $HXKcqLg8QW7qJRkSGoA21K
+Position: $root:2
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "Required"
+
+# $46GU4k86Xi1YuGNd5PMht8
+Position: $root:12
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "Tuneable Variables"
+
+# $2LciL1Cqf6gWhiUJbHTEtC
+Position: $46GU4k86Xi1YuGNd5PMht8:0
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Dash Movement"
+
+# orientation
+Position: $HXKcqLg8QW7qJRkSGoA21K:0
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# playerCam
+Position: $HXKcqLg8QW7qJRkSGoA21K:1
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# dashForce
+Position: $2LciL1Cqf6gWhiUJbHTEtC:0
+
+# dashUpwardForce
+Position: $2LciL1Cqf6gWhiUJbHTEtC:1
+
+# dashDuration
+Position: $2LciL1Cqf6gWhiUJbHTEtC:2
+
+# dashCooldown
+Position: $2LciL1Cqf6gWhiUJbHTEtC:3

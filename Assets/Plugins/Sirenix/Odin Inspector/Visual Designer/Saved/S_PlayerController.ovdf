@@ -42,6 +42,11 @@ Position: $SCMC75WypgTm9QcxP5FFug:4
 + [Sirenix.OdinInspector.TitleGroupAttribute]
 	GroupName = "Slope Movement"
 
+# $JEeUGe9DeH4ppzSiJcBLby
+Position: $SCMC75WypgTm9QcxP5FFug:5
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Dashing Movement"
+
 # canMove
 Position: $MKUEq4cSC2wyVU5b5c4KtR:0
 
@@ -94,3 +99,6 @@ Position: $HWqPAenC865maZKJTALzjU:1
 
 # maxSlopeAngle
 Position: $XEm8pjYF2E8iM6fMDTMg4m:0
+
+# dashSpeed
+Position: $JEeUGe9DeH4ppzSiJcBLby:0

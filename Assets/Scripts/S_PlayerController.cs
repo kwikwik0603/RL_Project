@@ -18,6 +18,8 @@ public class S_PlayerController : MonoBehaviour
     [SerializeField] private Transform orientation;
 
     [SerializeField] private float groundDrag;
+    [HideInInspector] public Vector3 moveDirection;
+
 
     //jump and air movement
     [SerializeField] private float jumpForce;
@@ -35,6 +37,10 @@ public class S_PlayerController : MonoBehaviour
     private RaycastHit slopeHit;
     private bool exitingSlope;
 
+    //dashing
+    [SerializeField] private float dashSpeed;
+    [HideInInspector] public bool dashing;
+
     //ground check
     [SerializeField] private float playerHeight;
     [SerializeField] private LayerMask whatIsGround;
@@ -44,7 +50,7 @@ public class S_PlayerController : MonoBehaviour
     private InputSystem_Actions actions;
     float horInput;
     float verInput;
-    Vector3 moveDirection;
+    
 
     //rigidbody
     Rigidbody rb;
@@ -56,26 +62,27 @@ public class S_PlayerController : MonoBehaviour
         walking,
         sprinting,
         crouching,
+        dashing,
         air
     }
     public MovementState state;
 
-    void Awake()
+    private void Awake()
     {
         actions = new InputSystem_Actions();
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         actions.Player.Enable();
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         actions.Player.Disable();
     }
 
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -86,7 +93,7 @@ public class S_PlayerController : MonoBehaviour
 
     }
 
-    void Update()
+    private void Update()
     {
 
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
@@ -95,20 +102,20 @@ public class S_PlayerController : MonoBehaviour
         SpeedControl();
         StateHandler();
 
-        if (isGrounded)
+        if (state == MovementState.walking || state == MovementState.sprinting || state == MovementState.crouching)
             rb.linearDamping = groundDrag;
         else
             rb.linearDamping = 0;
     }
 
     //update for physics based movement
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         MovePlayer();
     }
 
     //getting player input
-    void MyInput()
+    private void MyInput()
     {
         Vector2 moveInput = actions.Player.Move.ReadValue<Vector2>();
 
@@ -144,8 +151,13 @@ public class S_PlayerController : MonoBehaviour
     //handles state for movement
     private void StateHandler()
     {
+        if (dashing)
+        {
+            state = MovementState.dashing;
+            moveSpeed = crouchSpeed;
+        }
         //crouching
-        if (actions.Player.Crouch.IsInProgress())
+        else if (actions.Player.Crouch.IsInProgress())
         {
             state = MovementState.crouching;
             moveSpeed = crouchSpeed;
@@ -225,7 +237,7 @@ public class S_PlayerController : MonoBehaviour
     }
 
     //handles jumping
-    void Jump()
+    private void Jump()
     {
         exitingSlope = true;
 
@@ -238,12 +250,14 @@ public class S_PlayerController : MonoBehaviour
         }
     }
 
-    void ResetJump()
+    //resets jump state
+    private void ResetJump()
     {
         readyToJump = true;
         exitingSlope = false;
     }
 
+    //checks if on slope or not
     private bool OnSlope()
     {
         if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
@@ -255,6 +269,7 @@ public class S_PlayerController : MonoBehaviour
         return false;
     }
 
+    //gets the direction to move when on slope
     private Vector3 GetSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
