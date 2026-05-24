@@ -155,6 +155,7 @@ GameObject:
   - component: {fileID: 5143597800485811892}
   - component: {fileID: 2884445733523675855}
   - component: {fileID: 8075700224974348503}
+  - component: {fileID: 13366077285551314}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -223,13 +224,19 @@ MonoBehaviour:
   canCrouch: 1
   canDash: 1
   canAttack: 1
-  walkSpeed: 0
-  sprintSpeed: 0
+  walkSpeed: 7
+  sprintSpeed: 14
   orientation: {fileID: 5630546238191514571}
   groundDrag: 5
+  moveDirection: {x: 0, y: 0, z: 0}
   jumpForce: 6
   jumpCooldown: 0.25
   airMultiplier: 0.4
+  crouchSpeed: 5
+  crouchYScale: 0.5
+  maxSlopeAngle: 40
+  dashSpeed: 20
+  dashing: 0
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
@@ -243,7 +250,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6255170293516015778}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: 68d10be20fedb8e44b8a46204b1c705c, type: 3}
   m_Controller: {fileID: 9100000, guid: 3e6c2a3097984cb4694f9ca34d63a488, type: 2}
   m_CullingMode: 0
@@ -257,6 +264,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &13366077285551314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6255170293516015778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 938f655cb753c9d4da24521a8ea8dd53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_Dashing
+  orientation: {fileID: 5630546238191514571}
+  playerCam: {fileID: 0}
+  dashForce: 20
+  dashUpwardForce: 0
+  dashDuration: 0.25
+  dashCooldown: 1.5
 --- !u!1 &8281364374285571002
 GameObject:
   m_ObjectHideFlags: 0
