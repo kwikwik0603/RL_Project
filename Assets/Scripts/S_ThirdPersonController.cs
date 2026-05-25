@@ -12,7 +12,9 @@ public class S_ThirdPersonController : MonoBehaviour
     [SerializeField] private Animator anim;
 
     //movement
-    [SerializeField] private float movementSpeed = 6f;
+    [SerializeField] private float walkSpeed = 6f;
+    [SerializeField] private float sprintSpeed = 12f;
+
     private float turnSmoothTime = 0.1f;
     private float turnVelocity;
 
@@ -20,6 +22,7 @@ public class S_ThirdPersonController : MonoBehaviour
     private InputSystem_Actions actions;
     float horInput;
     float verInput;
+    bool isSprinting;
 
     private void Awake()
     {
@@ -45,7 +48,7 @@ public class S_ThirdPersonController : MonoBehaviour
     private void Update()
     {
         MyInput();
-        AnimController();
+        PlayerMovement();
     }
     
     private void MyInput2()
@@ -67,40 +70,57 @@ public class S_ThirdPersonController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, angle, 0);
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;  
-            controller.Move(moveDir * movementSpeed * Time.deltaTime);
+            controller.Move(moveDir * walkSpeed * Time.deltaTime);
         }
     }
 
     private void MyInput()
     {
+        //get input from InputSystems and split into two floats
         Vector2 moveInput = actions.Player.Move.ReadValue<Vector2>();
         horInput = moveInput.x;
         verInput = moveInput.y;
 
+        //getting sprint
+        isSprinting = actions.Player.Dash.IsPressed();
+    }
+
+    private void PlayerMovement()
+    {
+        float currentSpeed = isSprinting ? sprintSpeed : walkSpeed;
+        float animMultiplier = isSprinting ? 2f : 1f;
+
+        //getas cameras y rotation, smooths it and rotates transform
         float targetAngle = cam.eulerAngles.y;
         float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnVelocity, turnSmoothTime);
         transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
+        //getting cameras directions as vectors, flattening and normoalizing them
         Vector3 camForward = cam.forward;
         Vector3 camRight = cam.right;
-
-
         camForward.y = 0f;
         camRight.y = 0f;
         camForward.Normalize();
         camRight.Normalize();
 
+        //moving the transform according to the camera directions
         Vector3 moveDir = (camForward * verInput) + (camRight * horInput);
 
         if (moveDir.magnitude > 0.1f)
         {
-            controller.Move(moveDir.normalized * movementSpeed * Time.deltaTime);
-        }
-    }
+            controller.Move(moveDir.normalized * currentSpeed * Time.deltaTime);
 
-    private void AnimController()
-    {
-        anim.SetFloat("Horizontal", horInput, 0.1f, Time.deltaTime);
-        anim.SetFloat("Vertical", verInput, 0.1f, Time.deltaTime);
+            Vector3 localMove = transform.InverseTransformDirection(moveDir.normalized);
+            float animHor = localMove.x * animMultiplier;
+            float animVer = localMove.z * animMultiplier;
+
+            anim.SetFloat("Horizontal", animHor, 0.1f, Time.deltaTime);
+            anim.SetFloat("Vertical", animVer, 0.1f, Time.deltaTime);
+        }
+        else
+        {
+            anim.SetFloat("Horizontal", horInput, 0.1f, Time.deltaTime);
+            anim.SetFloat("Vertical", verInput, 0.1f, Time.deltaTime);
+        }
     }
 }
