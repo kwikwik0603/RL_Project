@@ -15,14 +15,17 @@ public class S_ThirdPersonController : MonoBehaviour
     [SerializeField] private float walkSpeed = 6f;
     [SerializeField] private float sprintSpeed = 12f;
 
+    private Vector3 moveDir;
+    private float movementSpeed;
+
     private float turnSmoothTime = 0.1f;
     private float turnVelocity;
 
     //input
     private InputSystem_Actions actions;
+    bool isSprinting;
     float horInput;
     float verInput;
-    bool isSprinting;
 
     private void Awake()
     {
@@ -48,7 +51,8 @@ public class S_ThirdPersonController : MonoBehaviour
     private void Update()
     {
         MyInput();
-        PlayerMovement();
+        MovementController();
+        AnimatorController();
     }
     
     private void MyInput2()
@@ -76,26 +80,27 @@ public class S_ThirdPersonController : MonoBehaviour
 
     private void MyInput()
     {
-        //get input from InputSystems and split into two floats
+        //input from system
+        isSprinting = actions.Player.Sprint.IsPressed();
         Vector2 moveInput = actions.Player.Move.ReadValue<Vector2>();
         horInput = moveInput.x;
         verInput = moveInput.y;
-
-        //getting sprint
-        isSprinting = actions.Player.Dash.IsPressed();
     }
 
-    private void PlayerMovement()
+    private void MovementController()
     {
-        float currentSpeed = isSprinting ? sprintSpeed : walkSpeed;
-        float animMultiplier = isSprinting ? 2f : 1f;
+        //walk and run speed
+        float targetSpeed = isSprinting ? sprintSpeed : walkSpeed;
 
-        //getas cameras y rotation, smooths it and rotates transform
+        // Smoothly interpolate physical speed
+        movementSpeed = Mathf.MoveTowards(movementSpeed, targetSpeed, Time.deltaTime * 8f);
+
+        //gets camera angle and lerps transform accordingly
         float targetAngle = cam.eulerAngles.y;
         float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnVelocity, turnSmoothTime);
         transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-        //getting cameras directions as vectors, flattening and normoalizing them
+        //world space processing of camera direction
         Vector3 camForward = cam.forward;
         Vector3 camRight = cam.right;
         camForward.y = 0f;
@@ -103,24 +108,36 @@ public class S_ThirdPersonController : MonoBehaviour
         camForward.Normalize();
         camRight.Normalize();
 
-        //moving the transform according to the camera directions
         Vector3 moveDir = (camForward * verInput) + (camRight * horInput);
 
+        //dead zone check
         if (moveDir.magnitude > 0.1f)
-        {
-            controller.Move(moveDir.normalized * currentSpeed * Time.deltaTime);
-
-            Vector3 localMove = transform.InverseTransformDirection(moveDir.normalized);
-            float animHor = localMove.x * animMultiplier;
-            float animVer = localMove.z * animMultiplier;
-
-            anim.SetFloat("Horizontal", animHor, 0.1f, Time.deltaTime);
-            anim.SetFloat("Vertical", animVer, 0.1f, Time.deltaTime);
+        { 
+            controller.Move(moveDir.normalized * movementSpeed * Time.deltaTime);
         }
         else
         {
-            anim.SetFloat("Horizontal", horInput, 0.1f, Time.deltaTime);
-            anim.SetFloat("Vertical", verInput, 0.1f, Time.deltaTime);
+            // Smoothly decay to zero when you release the keys
+            movementSpeed = Mathf.MoveTowards(movementSpeed, 0f, Time.deltaTime * 10f);
+        }
+    }
+
+    private void AnimatorController()
+    {
+        if (moveDir.magnitude > 0.1f)
+        {
+            float animMultiplier = isSprinting ? 2.0f : 1.0f;
+
+            float targetHorAnim = horInput * animMultiplier;
+            float targetVerAnim = verInput * animMultiplier;
+
+            anim.SetFloat("Horizontal", targetHorAnim, 0.1f, Time.deltaTime);
+            anim.SetFloat("Vertical", targetVerAnim, 0.1f, Time.deltaTime);
+        }
+        else
+        {
+            anim.SetFloat("Horizontal", 0f, 0.1f, Time.deltaTime);
+            anim.SetFloat("Vertical", 0f, 0.1f, Time.deltaTime);
         }
     }
 }
