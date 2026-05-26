@@ -3,7 +3,7 @@ using UnityEngine;
 public class S_ThirdPersonController : MonoBehaviour
 {
     //player controller
-    [SerializeField] private CharacterController controller;
+    [SerializeField] private CharacterController charController;
 
     //camera
     [SerializeField] private Transform cam;
@@ -14,6 +14,12 @@ public class S_ThirdPersonController : MonoBehaviour
     //movement
     [SerializeField] private float walkSpeed = 6f;
     [SerializeField] private float sprintSpeed = 12f;
+    [SerializeField] private float crouchingHeight = 1f;
+    private float standingHeight;
+    private Vector3 standingCentre;
+    private Vector3 crouchingCentre;
+
+
 
     private Vector3 moveDir;
     private float movementSpeed;
@@ -46,13 +52,19 @@ public class S_ThirdPersonController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        standingHeight = charController.height;
+        standingCentre = charController.center;
+
+        crouchingCentre = standingCentre;
+        crouchingCentre.y = crouchingCentre.y - ((standingHeight - crouchingHeight) / 2f);
     }
 
     private void Update()
     {
         MyInput();
         MovementController();
-        AnimatorController();
+        //AnimatorController();
     }
     
     private void MyInput2()
@@ -74,7 +86,7 @@ public class S_ThirdPersonController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, angle, 0);
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;  
-            controller.Move(moveDir * walkSpeed * Time.deltaTime);
+            charController.Move(moveDir * walkSpeed * Time.deltaTime);
         }
     }
 
@@ -85,6 +97,26 @@ public class S_ThirdPersonController : MonoBehaviour
         Vector2 moveInput = actions.Player.Move.ReadValue<Vector2>();
         horInput = moveInput.x;
         verInput = moveInput.y;
+
+        if(actions.Player.Crouch.IsPressed())
+        {
+            charController.height = crouchingHeight;
+            charController.center = crouchingCentre;
+
+            if (actions.Player.Crouch.WasPressedThisFrame())
+            {
+                charController.Move(Vector3.down * 0.2f);
+            }
+
+            anim.SetBool("Crouching", true);
+        }
+        else
+        {
+            charController.height = standingHeight;
+            charController.center = standingCentre;
+
+            anim.SetBool("Crouching", false);
+        }
     }
 
     private void MovementController()
@@ -108,34 +140,33 @@ public class S_ThirdPersonController : MonoBehaviour
         camForward.Normalize();
         camRight.Normalize();
 
+        Debug.Log("Hor Input: " + horInput);
+        Debug.Log("Ver Input: " + verInput);
+
         Vector3 moveDir = (camForward * verInput) + (camRight * horInput);
 
         //dead zone check
         if (moveDir.magnitude > 0.1f)
         { 
-            controller.Move(moveDir.normalized * movementSpeed * Time.deltaTime);
-        }
-        else
-        {
-            // Smoothly decay to zero when you release the keys
-            movementSpeed = Mathf.MoveTowards(movementSpeed, 0f, Time.deltaTime * 10f);
-        }
-    }
+            charController.Move(moveDir.normalized * movementSpeed * Time.deltaTime);
 
-    private void AnimatorController()
-    {
-        if (moveDir.magnitude > 0.1f)
-        {
             float animMultiplier = isSprinting ? 2.0f : 1.0f;
 
             float targetHorAnim = horInput * animMultiplier;
             float targetVerAnim = verInput * animMultiplier;
+
+            Debug.Log("Hor Input: " + targetHorAnim);
+            Debug.Log("Ver Input: " + targetVerAnim);
 
             anim.SetFloat("Horizontal", targetHorAnim, 0.1f, Time.deltaTime);
             anim.SetFloat("Vertical", targetVerAnim, 0.1f, Time.deltaTime);
         }
         else
         {
+            // Smoothly decay to zero when you release the keys
+
+            movementSpeed = Mathf.MoveTowards(movementSpeed, 0f, Time.deltaTime * 10f);
+
             anim.SetFloat("Horizontal", 0f, 0.1f, Time.deltaTime);
             anim.SetFloat("Vertical", 0f, 0.1f, Time.deltaTime);
         }

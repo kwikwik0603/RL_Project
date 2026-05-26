@@ -814,11 +814,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea06ff447233afd48bf00345698b3156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::S_ThirdPersonController
-  controller: {fileID: 555297773}
+  charController: {fileID: 555297773}
   cam: {fileID: 1823688467}
   anim: {fileID: 555297774}
   walkSpeed: 1.2
   sprintSpeed: 4.5
+  crouchingHeight: 1.5
 --- !u!143 &555297773
 CharacterController:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ Position: $root:0
 	GroupName = "Required"
 
 # $8cHscXMPBNgjLUMA2uKDNB
-Position: $root:15
+Position: $root:13
 + [Sirenix.OdinInspector.FoldoutGroupAttribute]
 	GroupName = "Tuneable"
 
@@ -29,3 +29,10 @@ Position: $8cHscXMPBNgjLUMA2uKDNB:0
 
 # sprintSpeed
 Position: $8cHscXMPBNgjLUMA2uKDNB:1
+
+# charController
+Position: $FbG5hfc51nxd1sXVq1kfwD:0
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# crouchingHeight
+Position: $8cHscXMPBNgjLUMA2uKDNB:2
