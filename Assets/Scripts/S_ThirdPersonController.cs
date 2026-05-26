@@ -12,12 +12,18 @@ public class S_ThirdPersonController : MonoBehaviour
     [SerializeField] private Animator anim;
 
     //movement
-    [SerializeField] private float movementSpeed = 6f;
+    [SerializeField] private float walkSpeed = 6f;
+    [SerializeField] private float sprintSpeed = 12f;
+
+    private Vector3 moveDir;
+    private float movementSpeed;
+
     private float turnSmoothTime = 0.1f;
     private float turnVelocity;
 
     //input
     private InputSystem_Actions actions;
+    bool isSprinting;
     float horInput;
     float verInput;
 
@@ -45,7 +51,8 @@ public class S_ThirdPersonController : MonoBehaviour
     private void Update()
     {
         MyInput();
-        AnimController();
+        MovementController();
+        AnimatorController();
     }
     
     private void MyInput2()
@@ -67,24 +74,35 @@ public class S_ThirdPersonController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, angle, 0);
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;  
-            controller.Move(moveDir * movementSpeed * Time.deltaTime);
+            controller.Move(moveDir * walkSpeed * Time.deltaTime);
         }
     }
 
     private void MyInput()
     {
+        //input from system
+        isSprinting = actions.Player.Sprint.IsPressed();
         Vector2 moveInput = actions.Player.Move.ReadValue<Vector2>();
         horInput = moveInput.x;
         verInput = moveInput.y;
+    }
 
+    private void MovementController()
+    {
+        //walk and run speed
+        float targetSpeed = isSprinting ? sprintSpeed : walkSpeed;
+
+        // Smoothly interpolate physical speed
+        movementSpeed = Mathf.MoveTowards(movementSpeed, targetSpeed, Time.deltaTime * 8f);
+
+        //gets camera angle and lerps transform accordingly
         float targetAngle = cam.eulerAngles.y;
         float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnVelocity, turnSmoothTime);
         transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
+        //world space processing of camera direction
         Vector3 camForward = cam.forward;
         Vector3 camRight = cam.right;
-
-
         camForward.y = 0f;
         camRight.y = 0f;
         camForward.Normalize();
@@ -92,15 +110,34 @@ public class S_ThirdPersonController : MonoBehaviour
 
         Vector3 moveDir = (camForward * verInput) + (camRight * horInput);
 
+        //dead zone check
         if (moveDir.magnitude > 0.1f)
-        {
+        { 
             controller.Move(moveDir.normalized * movementSpeed * Time.deltaTime);
+        }
+        else
+        {
+            // Smoothly decay to zero when you release the keys
+            movementSpeed = Mathf.MoveTowards(movementSpeed, 0f, Time.deltaTime * 10f);
         }
     }
 
-    private void AnimController()
+    private void AnimatorController()
     {
-        anim.SetFloat("Horizontal", horInput, 0.1f, Time.deltaTime);
-        anim.SetFloat("Vertical", verInput, 0.1f, Time.deltaTime);
+        if (moveDir.magnitude > 0.1f)
+        {
+            float animMultiplier = isSprinting ? 2.0f : 1.0f;
+
+            float targetHorAnim = horInput * animMultiplier;
+            float targetVerAnim = verInput * animMultiplier;
+
+            anim.SetFloat("Horizontal", targetHorAnim, 0.1f, Time.deltaTime);
+            anim.SetFloat("Vertical", targetVerAnim, 0.1f, Time.deltaTime);
+        }
+        else
+        {
+            anim.SetFloat("Horizontal", 0f, 0.1f, Time.deltaTime);
+            anim.SetFloat("Vertical", 0f, 0.1f, Time.deltaTime);
+        }
     }
 }

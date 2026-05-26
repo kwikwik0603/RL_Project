@@ -1,0 +1,31 @@
+OVDF v1.1
+S_ThirdPersonController, Assembly-CSharp
+MetaGuid:ea06ff447233afd48bf00345698b3156
+
+# $FbG5hfc51nxd1sXVq1kfwD
+Position: $root:0
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "Required"
+
+# $8cHscXMPBNgjLUMA2uKDNB
+Position: $root:15
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "Tuneable"
+
+# controller
+Position: $FbG5hfc51nxd1sXVq1kfwD:0
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# anim
+Position: $FbG5hfc51nxd1sXVq1kfwD:1
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# cam
+Position: $FbG5hfc51nxd1sXVq1kfwD:2
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# walkSpeed
+Position: $8cHscXMPBNgjLUMA2uKDNB:0
+
+# sprintSpeed
+Position: $8cHscXMPBNgjLUMA2uKDNB:1
