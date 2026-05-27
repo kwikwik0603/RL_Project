@@ -778,6 +778,7 @@ GameObject:
   - component: {fileID: 555297773}
   - component: {fileID: 555297772}
   - component: {fileID: 555297774}
+  - component: {fileID: 555297775}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -800,6 +801,7 @@ Transform:
   m_Children:
   - {fileID: 1761994005}
   - {fileID: 228473748}
+  - {fileID: 947886299}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &555297772
@@ -814,11 +816,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea06ff447233afd48bf00345698b3156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::S_ThirdPersonController
-  controller: {fileID: 555297773}
+  charController: {fileID: 555297773}
   cam: {fileID: 1823688467}
   anim: {fileID: 555297774}
   walkSpeed: 1.2
   sprintSpeed: 4.5
+  canMove: 1
+  crouchingHeight: 1.5
+  jumpHeight: 1.5
+  gravity: -9.81
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 1024
+  state: 0
 --- !u!143 &555297773
 CharacterController:
   m_ObjectHideFlags: 0
@@ -866,6 +876,32 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &555297775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555297770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b961d943b6b5077499cd46cfbf94db22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_Throwing
+  cam: {fileID: 1823688467}
+  attackPoint: {fileID: 947886299}
+  projectilePrefab: {fileID: 1315309117584533678, guid: 5a54b714138d44241a358e14758890b9, type: 3}
+  anim: {fileID: 555297774}
+  tpController: {fileID: 555297772}
+  totalThrows: 100
+  fastThrowCooldown: 1
+  fastThrowForce: 50
+  fastThrowUpwardForce: 0
+  fastThrowCost: 0
+  slowThrowCooldown: 2
+  slowThrowForce: 5
+  slowThrowUpwardForce: 10
+  slowThrowCost: 0
 --- !u!1 &882475155
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,6 +1071,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 928439289}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &947886298
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 947886299}
+  m_Layer: 0
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &947886299
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947886298}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.07, y: 0.5, z: 1.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 555297771}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1161836302
 PrefabInstance:
   m_ObjectHideFlags: 0

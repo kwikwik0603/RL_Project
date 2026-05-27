@@ -8,9 +8,24 @@ Position: $root:0
 	GroupName = "Required"
 
 # $8cHscXMPBNgjLUMA2uKDNB
-Position: $root:15
+Position: $root:9
 + [Sirenix.OdinInspector.FoldoutGroupAttribute]
 	GroupName = "Tuneable"
+
+# $91NanHwwjSaecvpmmdZMmc
+Position: $8cHscXMPBNgjLUMA2uKDNB:0
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Normal Movement"
+
+# $FKZ57vrhSj8zmSmeikC2fj
+Position: $8cHscXMPBNgjLUMA2uKDNB:1
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Crouch Movement"
+
+# $H57diiJ83aCmEZQTfFcJih
+Position: $8cHscXMPBNgjLUMA2uKDNB:2
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Air Movement"
 
 # controller
 Position: $FbG5hfc51nxd1sXVq1kfwD:0
@@ -25,7 +40,33 @@ Position: $FbG5hfc51nxd1sXVq1kfwD:2
 + [Sirenix.OdinInspector.RequiredAttribute]
 
 # walkSpeed
-Position: $8cHscXMPBNgjLUMA2uKDNB:0
+Position: $91NanHwwjSaecvpmmdZMmc:0
 
 # sprintSpeed
-Position: $8cHscXMPBNgjLUMA2uKDNB:1
+Position: $91NanHwwjSaecvpmmdZMmc:1
+
+# charController
+Position: $FbG5hfc51nxd1sXVq1kfwD:0
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# crouchingHeight
+Position: $FKZ57vrhSj8zmSmeikC2fj:0
+
+# whatIsGround
+Position: $FbG5hfc51nxd1sXVq1kfwD:3
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# jumpForce
+Position: $H57diiJ83aCmEZQTfFcJih:0
+
+# jumpCooldown
+Position: $H57diiJ83aCmEZQTfFcJih:1
+
+# airMultiplier
+Position: $H57diiJ83aCmEZQTfFcJih:2
+
+# gravity
+Position: $H57diiJ83aCmEZQTfFcJih:0
+
+# jumpHeight
+Position: $H57diiJ83aCmEZQTfFcJih:1
