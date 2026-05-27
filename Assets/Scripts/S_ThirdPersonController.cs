@@ -21,7 +21,7 @@ public class S_ThirdPersonController : MonoBehaviour
     [HideInInspector] public bool canMove;
 
     //crouch movement
-    [SerializeField] private float crouchingHeight = 1f;
+    private float crouchingHeight = 1f;
     private float standingHeight;
     private Vector3 standingCentre;
     private Vector3 crouchingCentre;
@@ -105,7 +105,6 @@ public class S_ThirdPersonController : MonoBehaviour
         if(actions.Player.Jump.WasPressedThisFrame() && isGrounded && canMove)
         {
             anim.SetTrigger("Jumping");
-
         }
     }
 

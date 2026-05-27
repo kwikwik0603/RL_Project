@@ -10,7 +10,7 @@ public class S_Throwing : MonoBehaviour
     [SerializeField] private S_ThirdPersonController tpController;
 
     //
-    [SerializeField] private int totalThrows;
+    [SerializeField] private int stamina;
 
     [SerializeField] private float fastThrowCooldown;
     [SerializeField] private float fastThrowForce;
@@ -22,7 +22,7 @@ public class S_Throwing : MonoBehaviour
     [SerializeField] private float slowThrowUpwardForce;
     [SerializeField] private int slowThrowCost; 
 
-    AnimatorStateInfo stateInfo;
+
     private bool readyToThrow;
 
     //input actions
@@ -51,13 +51,13 @@ public class S_Throwing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (actions.Player.FastAttack.IsPressed() && readyToThrow && totalThrows > 0)
+        if (actions.Player.FastAttack.IsPressed() && readyToThrow && stamina > 0)
         {
             anim.SetTrigger("FastAttack");
             tpController.canMove = false;
             Invoke(nameof(ResetTrigger), 0.1f);
         }
-        if(actions.Player.SlowAttack.IsPressed() && readyToThrow && totalThrows > 0)
+        if(actions.Player.SlowAttack.IsPressed() && readyToThrow && stamina > 0)
         {
             anim.SetTrigger("SlowAttack");
             tpController.canMove = false;
@@ -80,7 +80,7 @@ public class S_Throwing : MonoBehaviour
 
         projectileRB.AddForce(forceToAdd, ForceMode.Impulse);
 
-        totalThrows -= fastThrowCost;
+        stamina -= fastThrowCost;
 
         Invoke(nameof(ResetThrow), fastThrowCooldown);
     }
@@ -99,7 +99,7 @@ public class S_Throwing : MonoBehaviour
 
         projectileRB.AddForce(forceToAdd, ForceMode.Impulse);
 
-        totalThrows -= slowThrowCost;
+        stamina -= slowThrowCost;
 
         Invoke(nameof(ResetThrow), slowThrowCooldown);
     }
@@ -139,7 +139,7 @@ public class S_Throwing : MonoBehaviour
         Vector3 forceToAdd = projectile.transform.forward * launchForce + transform.up * launchUpwardForce;
         projectileRB.AddForce(forceToAdd, ForceMode.Impulse);
 
-        totalThrows -= cost;
+        stamina -= cost;
 
         Invoke(nameof(ResetThrow), coolDown);
 
