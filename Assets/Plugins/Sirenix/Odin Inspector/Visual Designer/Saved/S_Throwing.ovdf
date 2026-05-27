@@ -1,0 +1,75 @@
+OVDF v1.1
+S_Throwing, Assembly-CSharp
+MetaGuid:b961d943b6b5077499cd46cfbf94db22
+
+# $DVZtEYsFpsbGsfHPx3oTw
+Position: $root:0
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "References"
+
+# $PsQHhe9mBtw6ffQohXcMTw
+Position: $root:1
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "Tuneable Values"
+
+# $TkysPHYWi9AYe2metcKFzu
+Position: $PsQHhe9mBtw6ffQohXcMTw:0
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Projectile"
+
+# $KzHrSpsCzApBAoWi9HuvzU
+Position: $PsQHhe9mBtw6ffQohXcMTw:1
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Fast Attack"
+
+# $RAaAruDqpWv2zoiGdirvjt
+Position: $PsQHhe9mBtw6ffQohXcMTw:2
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Slow Attack"
+
+# cam
+Position: $DVZtEYsFpsbGsfHPx3oTw:0
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# attackPoint
+Position: $DVZtEYsFpsbGsfHPx3oTw:1
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# projectilePrefab
+Position: $DVZtEYsFpsbGsfHPx3oTw:2
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# anim
+Position: $DVZtEYsFpsbGsfHPx3oTw:3
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# tpController
+Position: $DVZtEYsFpsbGsfHPx3oTw:4
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# totalThrows
+Position: $TkysPHYWi9AYe2metcKFzu:0
+
+# fastThrowCooldown
+Position: $KzHrSpsCzApBAoWi9HuvzU:0
+
+# fastThrowForce
+Position: $KzHrSpsCzApBAoWi9HuvzU:1
+
+# fastThrowUpwardForce
+Position: $KzHrSpsCzApBAoWi9HuvzU:2
+
+# fastThrowCost
+Position: $KzHrSpsCzApBAoWi9HuvzU:3
+
+# slowThrowCooldown
+Position: $RAaAruDqpWv2zoiGdirvjt:0
+
+# slowThrowForce
+Position: $RAaAruDqpWv2zoiGdirvjt:1
+
+# slowThrowUpwardForce
+Position: $RAaAruDqpWv2zoiGdirvjt:2
+
+# slowThrowCost
+Position: $RAaAruDqpWv2zoiGdirvjt:3
