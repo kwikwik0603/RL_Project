@@ -222,9 +222,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3122712917577992545}
   - component: {fileID: 8659988007065305676}
-  - component: {fileID: 2548508887934833631}
   - component: {fileID: 4018440938278960424}
+  - component: {fileID: 2548508887934833631}
   - component: {fileID: 8536047952498262425}
+  - component: {fileID: 4390617370849386312}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -240,7 +241,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4253934477278243823}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.99, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -275,31 +276,6 @@ CharacterController:
   m_SkinWidth: 0.005
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2548508887934833631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4253934477278243823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea06ff447233afd48bf00345698b3156, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::S_ThirdPersonController
-  charController: {fileID: 8659988007065305676}
-  cam: {fileID: 0}
-  anim: {fileID: 4018440938278960424}
-  walkSpeed: 1.2
-  sprintSpeed: 4.5
-  canMove: 1
-  crouchingHeight: 1.5
-  jumpHeight: 1.5
-  gravity: -9.81
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 1024
-  state: 0
 --- !u!95 &4018440938278960424
 Animator:
   serializedVersion: 7
@@ -322,6 +298,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2548508887934833631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4253934477278243823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea06ff447233afd48bf00345698b3156, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_ThirdPersonController
+  characterController: {fileID: 8659988007065305676}
+  mainCamera: {fileID: 0}
+  animator: {fileID: 4018440938278960424}
+  playerData: {fileID: 11400000, guid: f6d69e2094149be4cad7b004538f2da5, type: 2}
+  canMove: 1
 --- !u!114 &8536047952498262425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,20 +327,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b961d943b6b5077499cd46cfbf94db22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::S_Throwing
-  cam: {fileID: 0}
+  mainCamera: {fileID: 0}
   attackPoint: {fileID: 8773732694231742284}
   projectilePrefab: {fileID: 1315309117584533678, guid: 5a54b714138d44241a358e14758890b9, type: 3}
-  anim: {fileID: 4018440938278960424}
-  tpController: {fileID: 2548508887934833631}
-  totalThrows: 100
-  fastThrowCooldown: 1
-  fastThrowForce: 50
-  fastThrowUpwardForce: 0
-  fastThrowCost: 0
-  slowThrowCooldown: 2
-  slowThrowForce: 5
-  slowThrowUpwardForce: 10
-  slowThrowCost: 0
+  animator: {fileID: 4018440938278960424}
+  thridPersonController: {fileID: 2548508887934833631}
+  attackData: {fileID: 11400000, guid: df0ae337091e691408e89343699d72a4, type: 2}
+  playerData: {fileID: 11400000, guid: f6d69e2094149be4cad7b004538f2da5, type: 2}
+--- !u!114 &4390617370849386312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4253934477278243823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34a11fc1549462e49b280cc64b72928d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_PlayerHealth
+  playerData: {fileID: 11400000, guid: f6d69e2094149be4cad7b004538f2da5, type: 2}
+  animator: {fileID: 4018440938278960424}
+  healthBar: {fileID: 0}
+  staminaBar: {fileID: 0}
+  currentHealth: 0
 --- !u!1001 &8199509312790149121
 PrefabInstance:
   m_ObjectHideFlags: 0

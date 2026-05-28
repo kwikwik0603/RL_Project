@@ -7,69 +7,69 @@ Position: $root:0
 + [Sirenix.OdinInspector.FoldoutGroupAttribute]
 	GroupName = "References"
 
-# $PsQHhe9mBtw6ffQohXcMTw
-Position: $root:1
-+ [Sirenix.OdinInspector.FoldoutGroupAttribute]
-	GroupName = "Tuneable Values"
-
-# $TkysPHYWi9AYe2metcKFzu
-Position: $PsQHhe9mBtw6ffQohXcMTw:0
-+ [Sirenix.OdinInspector.TitleGroupAttribute]
-	GroupName = "Projectile"
-
-# $KzHrSpsCzApBAoWi9HuvzU
-Position: $PsQHhe9mBtw6ffQohXcMTw:1
-+ [Sirenix.OdinInspector.TitleGroupAttribute]
-	GroupName = "Fast Attack"
-
-# $RAaAruDqpWv2zoiGdirvjt
-Position: $PsQHhe9mBtw6ffQohXcMTw:2
-+ [Sirenix.OdinInspector.TitleGroupAttribute]
-	GroupName = "Slow Attack"
-
 # cam
-Position: $DVZtEYsFpsbGsfHPx3oTw:0
-+ [Sirenix.OdinInspector.RequiredAttribute]
-
-# attackPoint
 Position: $DVZtEYsFpsbGsfHPx3oTw:1
 + [Sirenix.OdinInspector.RequiredAttribute]
 
+# attackPoint
+Position: $DVZtEYsFpsbGsfHPx3oTw:4
++ [Sirenix.OdinInspector.RequiredAttribute]
+
 # projectilePrefab
-Position: $DVZtEYsFpsbGsfHPx3oTw:2
+Position: $DVZtEYsFpsbGsfHPx3oTw:5
 + [Sirenix.OdinInspector.RequiredAttribute]
 
 # anim
-Position: $DVZtEYsFpsbGsfHPx3oTw:3
+Position: $DVZtEYsFpsbGsfHPx3oTw:4
 + [Sirenix.OdinInspector.RequiredAttribute]
 
 # tpController
-Position: $DVZtEYsFpsbGsfHPx3oTw:4
+Position: $DVZtEYsFpsbGsfHPx3oTw:5
 + [Sirenix.OdinInspector.RequiredAttribute]
 
 # totalThrows
 Position: $TkysPHYWi9AYe2metcKFzu:0
 
 # fastThrowCooldown
-Position: $KzHrSpsCzApBAoWi9HuvzU:0
+Position: $root:13
 
 # fastThrowForce
-Position: $KzHrSpsCzApBAoWi9HuvzU:1
+Position: $root:14
 
 # fastThrowUpwardForce
-Position: $KzHrSpsCzApBAoWi9HuvzU:2
+Position: $root:15
 
 # fastThrowCost
-Position: $KzHrSpsCzApBAoWi9HuvzU:3
+Position: $root:16
 
 # slowThrowCooldown
-Position: $RAaAruDqpWv2zoiGdirvjt:0
+Position: $root:17
 
 # slowThrowForce
-Position: $RAaAruDqpWv2zoiGdirvjt:1
+Position: $root:18
 
 # slowThrowUpwardForce
-Position: $RAaAruDqpWv2zoiGdirvjt:2
+Position: $root:19
 
 # slowThrowCost
-Position: $RAaAruDqpWv2zoiGdirvjt:3
+Position: $root:20
+
+# attackData
+Position: $DVZtEYsFpsbGsfHPx3oTw:1
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# mainCamera
+Position: $DVZtEYsFpsbGsfHPx3oTw:2
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# animator
+Position: $DVZtEYsFpsbGsfHPx3oTw:3
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# thridPersonController
+Position: $DVZtEYsFpsbGsfHPx3oTw:6
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# playerData
+Position: $DVZtEYsFpsbGsfHPx3oTw:0
++ [Sirenix.OdinInspector.RequiredAttribute]

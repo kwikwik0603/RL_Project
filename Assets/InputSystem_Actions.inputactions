@@ -28,7 +28,7 @@
                     "name": "Attack",
                     "type": "Button",
                     "id": "6c2ab1b8-8984-453a-af3d-a3c78ae1679a",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -100,6 +100,15 @@
                     "name": "SlowAttack",
                     "type": "Button",
                     "id": "cbba2de1-b124-45e9-a728-11644df246ae",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Debug",
+                    "type": "Button",
+                    "id": "a3b1c7c7-5055-4b3e-a1ee-24db2bfeaed0",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -279,17 +288,6 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "05f6913d-c316-48b2-a6bb-e225f14c7960",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -500,6 +498,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SlowAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8e6b81dd-1c47-45a6-b75f-3244fa4d79a8",
+                    "path": "<Keyboard>/0",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Debug",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

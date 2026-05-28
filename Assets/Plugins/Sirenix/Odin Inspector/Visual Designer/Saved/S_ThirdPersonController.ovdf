@@ -7,53 +7,33 @@ Position: $root:0
 + [Sirenix.OdinInspector.FoldoutGroupAttribute]
 	GroupName = "Required"
 
-# $8cHscXMPBNgjLUMA2uKDNB
-Position: $root:9
-+ [Sirenix.OdinInspector.FoldoutGroupAttribute]
-	GroupName = "Tuneable"
-
-# $91NanHwwjSaecvpmmdZMmc
-Position: $8cHscXMPBNgjLUMA2uKDNB:0
-+ [Sirenix.OdinInspector.TitleGroupAttribute]
-	GroupName = "Normal Movement"
-
-# $FKZ57vrhSj8zmSmeikC2fj
-Position: $8cHscXMPBNgjLUMA2uKDNB:1
-+ [Sirenix.OdinInspector.TitleGroupAttribute]
-	GroupName = "Crouch Movement"
-
-# $H57diiJ83aCmEZQTfFcJih
-Position: $8cHscXMPBNgjLUMA2uKDNB:2
-+ [Sirenix.OdinInspector.TitleGroupAttribute]
-	GroupName = "Air Movement"
-
 # controller
 Position: $FbG5hfc51nxd1sXVq1kfwD:0
 + [Sirenix.OdinInspector.RequiredAttribute]
 
 # anim
-Position: $FbG5hfc51nxd1sXVq1kfwD:1
-+ [Sirenix.OdinInspector.RequiredAttribute]
-
-# cam
 Position: $FbG5hfc51nxd1sXVq1kfwD:2
 + [Sirenix.OdinInspector.RequiredAttribute]
 
+# cam
+Position: $FbG5hfc51nxd1sXVq1kfwD:3
++ [Sirenix.OdinInspector.RequiredAttribute]
+
 # walkSpeed
-Position: $91NanHwwjSaecvpmmdZMmc:0
+Position: $root:23
 
 # sprintSpeed
-Position: $91NanHwwjSaecvpmmdZMmc:1
+Position: $root:24
 
 # charController
-Position: $FbG5hfc51nxd1sXVq1kfwD:0
+Position: $FbG5hfc51nxd1sXVq1kfwD:1
 + [Sirenix.OdinInspector.RequiredAttribute]
 
 # crouchingHeight
-Position: $FKZ57vrhSj8zmSmeikC2fj:0
+Position: $root:25
 
 # whatIsGround
-Position: $FbG5hfc51nxd1sXVq1kfwD:3
+Position: $FbG5hfc51nxd1sXVq1kfwD:4
 + [Sirenix.OdinInspector.RequiredAttribute]
 
 # jumpForce
@@ -66,7 +46,23 @@ Position: $H57diiJ83aCmEZQTfFcJih:1
 Position: $H57diiJ83aCmEZQTfFcJih:2
 
 # gravity
-Position: $H57diiJ83aCmEZQTfFcJih:0
+Position: $root:26
 
 # jumpHeight
-Position: $H57diiJ83aCmEZQTfFcJih:1
+Position: $root:27
+
+# playerData
+Position: $FbG5hfc51nxd1sXVq1kfwD:0
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# characterController
+Position: $FbG5hfc51nxd1sXVq1kfwD:1
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# mainCamera
+Position: $FbG5hfc51nxd1sXVq1kfwD:2
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# animator
+Position: $FbG5hfc51nxd1sXVq1kfwD:3
++ [Sirenix.OdinInspector.RequiredAttribute]

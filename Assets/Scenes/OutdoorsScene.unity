@@ -1080,6 +1080,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1523231572}
   - component: {fileID: 1523231573}
+  - component: {fileID: 1523231574}
   m_Layer: 5
   m_Name: StaminaBar
   m_TagString: Untagged
@@ -1160,6 +1161,19 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1523231574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523231571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b723df4b07d125944a9743475a805e30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_StaminaBar
+  slider: {fileID: 1523231573}
 --- !u!1 &1562150051
 GameObject:
   m_ObjectHideFlags: 0
@@ -1170,6 +1184,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1562150052}
   - component: {fileID: 1562150053}
+  - component: {fileID: 1562150054}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -1250,6 +1265,19 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1562150054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562150051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6af9b23c21b08704c8bd6117060c7f42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_HealthBar
+  slider: {fileID: 1562150053}
 --- !u!1 &1750477871
 GameObject:
   m_ObjectHideFlags: 0
@@ -1901,7 +1929,7 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2548508887934833631, guid: eda0b24b4cce57f4aa740e7913671cbe, type: 3}
-      propertyPath: cam
+      propertyPath: mainCamera
       value: 
       objectReference: {fileID: 1823688467}
     - target: {fileID: 3122712917577992545, guid: eda0b24b4cce57f4aa740e7913671cbe, type: 3}
@@ -1948,14 +1976,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4390617370849386312, guid: eda0b24b4cce57f4aa740e7913671cbe, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 1562150054}
+    - target: {fileID: 4390617370849386312, guid: eda0b24b4cce57f4aa740e7913671cbe, type: 3}
+      propertyPath: staminaBar
+      value: 
+      objectReference: {fileID: 1523231574}
     - target: {fileID: 8536047952498262425, guid: eda0b24b4cce57f4aa740e7913671cbe, type: 3}
-      propertyPath: cam
+      propertyPath: mainCamera
       value: 
       objectReference: {fileID: 1823688467}
-    - target: {fileID: 8536047952498262425, guid: eda0b24b4cce57f4aa740e7913671cbe, type: 3}
-      propertyPath: stamina
-      value: 100
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

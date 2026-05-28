@@ -11,12 +11,12 @@ public class AttackData : ScriptableObject
     public float fastAttackCooldown;
     public float fastThrowForce;
     public float fastThrowUpwardForce;
-    public float fastThrowCost;
+    public int fastThrowCost;
 
     [Title("Slow Attack")]
     public float slowThrowCooldown;
     public float slowThrowForce;
     public float slowThrowUpwardForce;
-    public float slowThrowCost;
+    public int slowThrowCost;
 
 }

@@ -3,25 +3,15 @@ using UnityEngine;
 public class S_Throwing : MonoBehaviour
 {
     //references
-    [SerializeField] private Transform cam;
+    [SerializeField] private Transform mainCamera;
     [SerializeField] private Transform attackPoint;
     [SerializeField] private GameObject projectilePrefab;
-    [SerializeField] private Animator anim;
-    [SerializeField] private S_ThirdPersonController tpController;
+    [SerializeField] private Animator animator;
+    [SerializeField] private S_ThirdPersonController thridPersonController;
+    [SerializeField] private AttackData attackData;
+    [SerializeField] private PlayerData playerData;
 
-    //
-    [SerializeField] private int stamina;
-
-    [SerializeField] private float fastThrowCooldown;
-    [SerializeField] private float fastThrowForce;
-    [SerializeField] private float fastThrowUpwardForce;
-    [SerializeField] private int fastThrowCost;
-
-    [SerializeField] private float slowThrowCooldown;
-    [SerializeField] private float slowThrowForce;
-    [SerializeField] private float slowThrowUpwardForce;
-    [SerializeField] private int slowThrowCost; 
-
+    private int stamina;
 
     private bool readyToThrow;
 
@@ -45,65 +35,28 @@ public class S_Throwing : MonoBehaviour
 
     void Start()
     {
+        stamina = attackData.maxStamina;
+        playerData.isAlive = true;
         readyToThrow = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (actions.Player.FastAttack.IsPressed() && readyToThrow && stamina > 0)
+        if (actions.Player.FastAttack.IsPressed() && readyToThrow && stamina > 0 && playerData.isAlive)
         {
-            anim.SetTrigger("FastAttack");
-            tpController.canMove = false;
+            animator.SetTrigger("FastAttack");
+            playerData.canMove = false;
             Invoke(nameof(ResetTrigger), 0.1f);
         }
-        if(actions.Player.SlowAttack.IsPressed() && readyToThrow && stamina > 0)
+        if(actions.Player.SlowAttack.IsPressed() && readyToThrow && stamina > 0 && playerData.isAlive)
         {
-            anim.SetTrigger("SlowAttack");
-            tpController.canMove = false;
+            animator.SetTrigger("SlowAttack");
+            playerData.canMove = false;
             Invoke(nameof(ResetTrigger), 0.1f);
         }
     }
 
-
-    private void FastAttack()
-    {
-        Debug.Log("Function called");
-        
-        readyToThrow = false;
-        
-        GameObject projectile = Instantiate(projectilePrefab, attackPoint.position, GetCameraRotation());
-
-        Rigidbody projectileRB = projectile.GetComponent<Rigidbody>();
-
-        Vector3 forceToAdd = projectile.transform.forward * fastThrowForce + transform.up * fastThrowUpwardForce;
-
-        projectileRB.AddForce(forceToAdd, ForceMode.Impulse);
-
-        stamina -= fastThrowCost;
-
-        Invoke(nameof(ResetThrow), fastThrowCooldown);
-    }
-
-    private void SlowAttack()
-    {
-        Debug.Log("Function called");
-
-        readyToThrow = false;
-        
-        GameObject projectile = Instantiate(projectilePrefab, attackPoint.position, GetCameraRotation());
-
-        Rigidbody projectileRB = projectile.GetComponent<Rigidbody>();
-
-        Vector3 forceToAdd = projectile.transform.forward * slowThrowForce + transform.up * slowThrowUpwardForce;
-
-        projectileRB.AddForce(forceToAdd, ForceMode.Impulse);
-
-        stamina -= slowThrowCost;
-
-        Invoke(nameof(ResetThrow), slowThrowCooldown);
-    }
-
+    //called from event trigger in anim clip
     private void LaunchProjectile(int type)
     {
         float coolDown = 0f;
@@ -114,17 +67,17 @@ public class S_Throwing : MonoBehaviour
         switch (type)
         {
             case 1:
-                coolDown = fastThrowCooldown;
-                launchForce = fastThrowForce;
-                launchUpwardForce = fastThrowUpwardForce;
-                cost = fastThrowCost;
+                coolDown            = attackData.fastAttackCooldown;
+                launchForce         = attackData.fastThrowForce;
+                launchUpwardForce   = attackData.fastThrowUpwardForce;
+                cost                = attackData.fastThrowCost;
 
                 break;
             case 2:
-                coolDown = slowThrowCooldown;
-                launchForce = slowThrowForce;
-                launchUpwardForce = slowThrowUpwardForce;
-                cost = slowThrowCost;
+                coolDown            = attackData.slowThrowCooldown;
+                launchForce         = attackData.slowThrowForce;
+                launchUpwardForce   = attackData.slowThrowUpwardForce;
+                cost                = attackData.slowThrowCost;
 
                 break;
             default:
@@ -152,20 +105,21 @@ public class S_Throwing : MonoBehaviour
 
     private void ResetTrigger()
     {
-        anim.ResetTrigger("FastAttack");
-        anim.ResetTrigger("SlowAttack");
+        animator.ResetTrigger("FastAttack");
+        animator.ResetTrigger("SlowAttack");
     }
 
+    //called from event trigger in anim clip
     private void ResetCharController()
     {
 
         Debug.Log("Bool reset");
-        tpController.canMove = true;
+        playerData.canMove = true;
     }
 
     private Quaternion GetCameraRotation()
     {
-        float horizontalCamAngle = cam.eulerAngles.y;
+        float horizontalCamAngle = mainCamera.eulerAngles.y;
         Quaternion launchRotation = Quaternion.Euler(0f, horizontalCamAngle, 0f);
 
         return launchRotation;

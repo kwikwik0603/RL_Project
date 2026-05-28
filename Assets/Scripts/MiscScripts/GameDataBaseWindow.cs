@@ -27,7 +27,7 @@ public class GameDataBaseWindow : OdinMenuEditorWindow
         );
 
         window.position = centerRect;
-        window.titleContent = new GUIContent("Item & Weapon Database");
+        window.titleContent = new GUIContent("Database");
 
         // 4. Force display to screen
         window.Show();
