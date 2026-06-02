@@ -44,7 +44,7 @@ public class S_NPCInteraction : MonoBehaviour
             Collider col = results[0];
             Debug.Log("Detected");
 
-            S_PlayerController pController = col.GetComponentInParent<S_PlayerController>();
+            S_ThirdPersonController pController = col.GetComponentInParent<S_ThirdPersonController>();
 
             if(pController != null)
             {

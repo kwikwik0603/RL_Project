@@ -1,5 +1,5 @@
 OVDF v1.1
-S_Throwing, Assembly-CSharp
+S_Attack, Assembly-CSharp
 MetaGuid:b961d943b6b5077499cd46cfbf94db22
 
 # $DVZtEYsFpsbGsfHPx3oTw
@@ -7,16 +7,41 @@ Position: $root:0
 + [Sirenix.OdinInspector.FoldoutGroupAttribute]
 	GroupName = "References"
 
+# $Q1jtrbbxKNEjEXRRLyqy29
+Position: $DVZtEYsFpsbGsfHPx3oTw:0
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Data"
+
+# $8L8VrxEqjt2G6Rs88gZJcG
+Position: $DVZtEYsFpsbGsfHPx3oTw:1
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Components"
+
+# $7E6xgsH2T6aSiqGJmX5xS2
+Position: $DVZtEYsFpsbGsfHPx3oTw:2
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Transforms"
+
+# $XxhhiVQT8enxi59AZ4ba69
+Position: $DVZtEYsFpsbGsfHPx3oTw:3
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Scripts"
+
+# $FmRKMt6966ehkye8CDvvhu
+Position: $DVZtEYsFpsbGsfHPx3oTw:4
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Prefabs"
+
 # cam
 Position: $DVZtEYsFpsbGsfHPx3oTw:1
 + [Sirenix.OdinInspector.RequiredAttribute]
 
 # attackPoint
-Position: $DVZtEYsFpsbGsfHPx3oTw:4
+Position: $7E6xgsH2T6aSiqGJmX5xS2:0
 + [Sirenix.OdinInspector.RequiredAttribute]
 
 # projectilePrefab
-Position: $DVZtEYsFpsbGsfHPx3oTw:5
+Position: $DVZtEYsFpsbGsfHPx3oTw:6
 + [Sirenix.OdinInspector.RequiredAttribute]
 
 # anim
@@ -55,21 +80,33 @@ Position: $root:19
 Position: $root:20
 
 # attackData
-Position: $DVZtEYsFpsbGsfHPx3oTw:1
+Position: $Q1jtrbbxKNEjEXRRLyqy29:1
 + [Sirenix.OdinInspector.RequiredAttribute]
 
 # mainCamera
-Position: $DVZtEYsFpsbGsfHPx3oTw:2
+Position: $7E6xgsH2T6aSiqGJmX5xS2:2
 + [Sirenix.OdinInspector.RequiredAttribute]
 
 # animator
-Position: $DVZtEYsFpsbGsfHPx3oTw:3
+Position: $8L8VrxEqjt2G6Rs88gZJcG:0
 + [Sirenix.OdinInspector.RequiredAttribute]
 
 # thridPersonController
-Position: $DVZtEYsFpsbGsfHPx3oTw:6
+Position: $XxhhiVQT8enxi59AZ4ba69:0
 + [Sirenix.OdinInspector.RequiredAttribute]
 
 # playerData
-Position: $DVZtEYsFpsbGsfHPx3oTw:0
+Position: $Q1jtrbbxKNEjEXRRLyqy29:0
 + [Sirenix.OdinInspector.RequiredAttribute]
+
+# throwPoint
+Position: $7E6xgsH2T6aSiqGJmX5xS2:1
+
+# hudManager
+Position: $XxhhiVQT8enxi59AZ4ba69:1
+
+# slowSpellPrefab
+Position: $FmRKMt6966ehkye8CDvvhu:0
+
+# fastSpellPrefab
+Position: $FmRKMt6966ehkye8CDvvhu:1

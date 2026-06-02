@@ -5,10 +5,8 @@ public class S_PlayerHealth : MonoBehaviour
 {
     [SerializeField] private PlayerData playerData;
     [SerializeField] private Animator animator;
-    
 
-    [SerializeField] private S_HealthBar healthBar;
-    [SerializeField] private S_StaminaBar staminaBar;
+    [SerializeField] private S_HudManager hudManager;
 
     private int maxHealth;
     [SerializeField] private int currentHealth;
@@ -34,7 +32,7 @@ public class S_PlayerHealth : MonoBehaviour
         maxHealth = playerData.maxHealth;
 
         currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+        hudManager.SetMaxHealth(maxHealth);
     }
 
     private void Update()
@@ -47,8 +45,9 @@ public class S_PlayerHealth : MonoBehaviour
 
     private void Takedamage(int damage)
     {
+        animator.SetTrigger("IsHurt");
         currentHealth -= damage;
-        healthBar.SetHealth(currentHealth);
+        hudManager.SetHealth(currentHealth);
 
         if(currentHealth <= 0)
         {

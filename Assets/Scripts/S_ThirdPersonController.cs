@@ -8,6 +8,13 @@ public class S_ThirdPersonController : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private PlayerData playerData;
 
+    [SerializeField] private string pHorizontal;
+    [SerializeField] private string pVertical;
+    [SerializeField] private string pIsCrouching;
+    [SerializeField] private string pIsAttacking;
+    [SerializeField] private string pFastSpell;
+    [SerializeField] private string pSlowSpell;
+
     //movement
     private float walkSpeed;
     private float sprintSpeed;
@@ -22,7 +29,8 @@ public class S_ThirdPersonController : MonoBehaviour
     private float standingHeight;
     private Vector3 standingCentre;
     private Vector3 crouchingCentre;
-    private bool isCrouching;
+    [SerializeField] private bool holdCrouch;
+    private bool isCrouching; //is used
 
     private float jumpHeight;
     private LayerMask whatIsGround;
@@ -87,16 +95,30 @@ public class S_ThirdPersonController : MonoBehaviour
         horInput = moveInput.x;
         verInput = moveInput.y;
 
-        if(actions.Player.Crouch.IsPressed())
+
+        if (!holdCrouch)
         {
-            Crouch();
+            if (actions.Player.Crouch.WasPressedThisFrame())
+            {
+                isCrouching = !isCrouching;
+                if (isCrouching) Crouch();
+                else ResetCrouch();
+            }
         }
         else
         {
-            ResetCrouch();
+            if (actions.Player.Crouch.IsPressed())
+            {
+                Crouch();
+            }
+            else
+            {
+                ResetCrouch();
+            }
         }
 
-        if(actions.Player.Jump.WasPressedThisFrame() && isGrounded && playerData.canMove)
+
+        if (actions.Player.Jump.WasPressedThisFrame() && isGrounded && playerData.canMove)
         {
             animator.SetTrigger("Jumping");
         }
@@ -173,7 +195,7 @@ public class S_ThirdPersonController : MonoBehaviour
             characterController.Move(Vector3.down * 0.2f);
         }
 
-        animator.SetBool("Crouching", true);
+        animator.SetBool("IsCrouching", true);
     }
 
     private void ResetCrouch()
@@ -182,7 +204,7 @@ public class S_ThirdPersonController : MonoBehaviour
         characterController.height = standingHeight;
         characterController.center = standingCentre;
 
-        animator.SetBool("Crouching", false);
+        animator.SetBool("IsCrouching", false);
     }
 
     private void Jump()
