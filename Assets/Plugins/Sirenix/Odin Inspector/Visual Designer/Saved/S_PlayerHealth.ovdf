@@ -1,0 +1,30 @@
+OVDF v1.1
+S_PlayerHealth, Assembly-CSharp
+
+# $CJw7m5GVcasTXdhRuiBeXd
+Position: $root:3
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "References"
+
+# $9CuU9nJNbQAAPsExk4q1Me
+Position: $root:9
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "Debug"
+
+# playerData
+Position: $CJw7m5GVcasTXdhRuiBeXd:0
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# healthBar
+Position: $CJw7m5GVcasTXdhRuiBeXd:2
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# staminaBar
+Position: $CJw7m5GVcasTXdhRuiBeXd:3
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# currentHealth
+Position: $9CuU9nJNbQAAPsExk4q1Me:0
+
+# animator
+Position: $CJw7m5GVcasTXdhRuiBeXd:1

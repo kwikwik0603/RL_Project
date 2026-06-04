@@ -8,15 +8,19 @@ public class AttackData : ScriptableObject
     public int maxStamina;
 
     [Title("Fast Attack")]
-    public float fastAttackCooldown;
+    public float fastDamage;
     public float fastThrowForce;
     public float fastThrowUpwardForce;
-    public float fastThrowCost;
+    public int   fastThrowCost;
+    public float fastAttackCooldown;
 
     [Title("Slow Attack")]
-    public float slowThrowCooldown;
+    public float slowBaseDamage;
+    public float slowExplosionRadius;
+    public float slowExplosionForce;
     public float slowThrowForce;
     public float slowThrowUpwardForce;
-    public float slowThrowCost;
+    public int   slowThrowCost;
+    public float slowThrowCooldown;
 
 }

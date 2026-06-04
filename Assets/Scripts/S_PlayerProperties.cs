@@ -3,21 +3,41 @@ using UnityEngine;
 using UnityEngine.UI;
 public class S_PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private int maxHealth;
+    [SerializeField] private PlayerData playerData;
+    [SerializeField] private Animator animator;
+
+    [SerializeField] private S_HudManager hudManager;
+
+    private int maxHealth;
     [SerializeField] private int currentHealth;
 
-    [SerializeField] private S_HealthBar healthBar;
-    [SerializeField] private S_StaminaBar staminaBar;
+    private InputSystem_Actions actions;
+    private void Awake()
+    {
+        actions = new InputSystem_Actions();
+    }
+
+    private void OnEnable()
+    {
+        actions.Player.Enable();
+    }
+
+    private void OnDisable()
+    {
+        actions.Player.Disable();
+    }
 
     private void Start()
     {
+        maxHealth = playerData.maxHealth;
+
         currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+        hudManager.SetMaxHealth(maxHealth);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (actions.Player.Debug.WasPressedThisFrame())
         {
             Takedamage(20);
         }
@@ -25,7 +45,15 @@ public class S_PlayerHealth : MonoBehaviour
 
     private void Takedamage(int damage)
     {
+        animator.SetTrigger("IsHurt");
         currentHealth -= damage;
-        healthBar.SetHealth(currentHealth);
+        hudManager.SetHealth(currentHealth);
+
+        if(currentHealth <= 0)
+        {
+            animator.SetBool("IsDead", true);
+            playerData.canMove = false;
+            playerData.isAlive = false;
+        }
     }
 }

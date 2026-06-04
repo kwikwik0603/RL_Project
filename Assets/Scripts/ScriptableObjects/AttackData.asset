@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: AttackData
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
   maxStamina: 100
-  fastAttackCooldown: 1
+  fastDamage: 2
   fastThrowForce: 50
   fastThrowUpwardForce: 0
   fastThrowCost: 2
-  slowThrowCooldown: 2
+  fastAttackCooldown: 1
+  slowBaseDamage: 20
+  slowExplosionRadius: 5
+  slowExplosionForce: 500
   slowThrowForce: 5
   slowThrowUpwardForce: 10
   slowThrowCost: 5
+  slowThrowCooldown: 2

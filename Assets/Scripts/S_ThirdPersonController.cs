@@ -2,18 +2,22 @@ using UnityEngine;
 
 public class S_ThirdPersonController : MonoBehaviour
 {
-    //player controller
-    [SerializeField] private CharacterController charController;
+    //references
+    [SerializeField] private CharacterController characterController;
+    [SerializeField] private Transform mainCamera;
+    [SerializeField] private Animator animator;
+    [SerializeField] private PlayerData playerData;
 
-    //camera
-    [SerializeField] private Transform cam;
-
-    //animator
-    [SerializeField] private Animator anim;
+    [SerializeField] private string pHorizontal;
+    [SerializeField] private string pVertical;
+    [SerializeField] private string pIsCrouching;
+    [SerializeField] private string pIsAttacking;
+    [SerializeField] private string pFastSpell;
+    [SerializeField] private string pSlowSpell;
 
     //movement
-    [SerializeField] private float walkSpeed = 6f;
-    [SerializeField] private float sprintSpeed = 12f;
+    private float walkSpeed;
+    private float sprintSpeed;
     private Vector3 moveDir;
     private float movementSpeed;
     private float turnSmoothTime = 0.1f;
@@ -25,11 +29,12 @@ public class S_ThirdPersonController : MonoBehaviour
     private float standingHeight;
     private Vector3 standingCentre;
     private Vector3 crouchingCentre;
-    private bool isCrouching;
+    [SerializeField] private bool holdCrouch;
+    private bool isCrouching; //is used
 
-    [SerializeField] private float jumpHeight = 1.5f;
-    [SerializeField] private float gravity = -9.81f;
-    [SerializeField] private LayerMask whatIsGround;
+    private float jumpHeight;
+    private LayerMask whatIsGround;
+    private float gravity = -9.81f;
     private float vertVelocity;
     private bool isGrounded;
 
@@ -39,21 +44,13 @@ public class S_ThirdPersonController : MonoBehaviour
     float horInput;
     float verInput;
 
-    public enum MovementState
-    {
-        walking,
-        running,
-        crouching,
-        air
-    }
-    public MovementState state;
 
     private void Awake()
     {
         actions = new InputSystem_Actions();
 
-        standingHeight = charController.height;
-        standingCentre = charController.center;
+        standingHeight = characterController.height;
+        standingCentre = characterController.center;
         crouchingCentre = standingCentre;
         crouchingCentre.y = crouchingCentre.y - ((standingHeight - crouchingHeight) / 2f);
     }
@@ -70,11 +67,16 @@ public class S_ThirdPersonController : MonoBehaviour
 
     void Start()
     {
+        walkSpeed = playerData.walkSpeed;
+        sprintSpeed = playerData.sprintSpeed;
+        jumpHeight = playerData.jumpHeight;
+        whatIsGround = playerData.GroundLayerMask;
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
         isCrouching = false;
-        canMove = true;
+        playerData.canMove = true;
     }
 
     private void Update()
@@ -93,18 +95,32 @@ public class S_ThirdPersonController : MonoBehaviour
         horInput = moveInput.x;
         verInput = moveInput.y;
 
-        if(actions.Player.Crouch.IsPressed())
+
+        if (!holdCrouch)
         {
-            Crouch();
+            if (actions.Player.Crouch.WasPressedThisFrame())
+            {
+                isCrouching = !isCrouching;
+                if (isCrouching) Crouch();
+                else ResetCrouch();
+            }
         }
         else
         {
-            ResetCrouch();
+            if (actions.Player.Crouch.IsPressed())
+            {
+                Crouch();
+            }
+            else
+            {
+                ResetCrouch();
+            }
         }
 
-        if(actions.Player.Jump.WasPressedThisFrame() && isGrounded && canMove)
+
+        if (actions.Player.Jump.WasPressedThisFrame() && isGrounded && playerData.canMove)
         {
-            anim.SetTrigger("Jumping");
+            animator.SetTrigger("Jumping");
         }
     }
 
@@ -120,14 +136,17 @@ public class S_ThirdPersonController : MonoBehaviour
         float targetSpeed = isSprinting ? sprintSpeed : walkSpeed;
         movementSpeed = Mathf.MoveTowards(movementSpeed, targetSpeed, Time.deltaTime * 8f);
 
-        //gets camera angle and lerps transform accordingly
-        float targetAngle = cam.eulerAngles.y;
-        float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnVelocity, turnSmoothTime);
-        transform.rotation = Quaternion.Euler(0f, angle, 0f);
+        if (playerData.isAlive)
+        {
+            //gets camera angle and lerps transform accordingly
+            float targetAngle = mainCamera.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnVelocity, turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+        }
 
         //world space processing of camera direction
-        Vector3 camForward = cam.forward;
-        Vector3 camRight = cam.right;
+        Vector3 camForward = mainCamera.forward;
+        Vector3 camRight = mainCamera.right;
         camForward.y = 0f;
         camRight.y = 0f;
         camForward.Normalize();
@@ -137,7 +156,7 @@ public class S_ThirdPersonController : MonoBehaviour
         Vector3 horzVelocity = Vector3.zero;
 
         //dead zone check
-        if (canMove && moveDir.magnitude > 0.1f)
+        if (playerData.canMove && moveDir.magnitude > 0.1f)
         {
             //charController.Move(moveDir.normalized * movementSpeed * Time.deltaTime);
 
@@ -146,15 +165,15 @@ public class S_ThirdPersonController : MonoBehaviour
             float animMultiplier = isSprinting ? 2.0f : 1.0f;
             float targetHorAnim = horInput * animMultiplier;
             float targetVerAnim = verInput * animMultiplier;
-            anim.SetFloat("Horizontal", targetHorAnim, 0.1f, Time.deltaTime);
-            anim.SetFloat("Vertical", targetVerAnim, 0.1f, Time.deltaTime);
+            animator.SetFloat("Horizontal", targetHorAnim, 0.1f, Time.deltaTime);
+            animator.SetFloat("Vertical", targetVerAnim, 0.1f, Time.deltaTime);
         }
         else
         {
             movementSpeed = Mathf.MoveTowards(movementSpeed, 0f, Time.deltaTime * 10f);
 
-            anim.SetFloat("Horizontal", 0f, 0.1f, Time.deltaTime);
-            anim.SetFloat("Vertical", 0f, 0.1f, Time.deltaTime);
+            animator.SetFloat("Horizontal", 0f, 0.1f, Time.deltaTime);
+            animator.SetFloat("Vertical", 0f, 0.1f, Time.deltaTime);
         }
         vertVelocity += gravity * Time.deltaTime;
 
@@ -162,30 +181,30 @@ public class S_ThirdPersonController : MonoBehaviour
         finalDisplacement.y = vertVelocity;
 
         
-        charController.Move(finalDisplacement * Time.deltaTime);
+        characterController.Move(finalDisplacement * Time.deltaTime);
     }
 
     private void Crouch()
     {
         isCrouching = true;
-        charController.height = crouchingHeight;
-        charController.center = crouchingCentre;
+        characterController.height = crouchingHeight;
+        characterController.center = crouchingCentre;
 
         if (actions.Player.Crouch.WasPressedThisFrame())
         {
-            charController.Move(Vector3.down * 0.2f);
+            characterController.Move(Vector3.down * 0.2f);
         }
 
-        anim.SetBool("Crouching", true);
+        animator.SetBool("IsCrouching", true);
     }
 
     private void ResetCrouch()
     {
         isCrouching = false;
-        charController.height = standingHeight;
-        charController.center = standingCentre;
+        characterController.height = standingHeight;
+        characterController.center = standingCentre;
 
-        anim.SetBool("Crouching", false);
+        animator.SetBool("IsCrouching", false);
     }
 
     private void Jump()
