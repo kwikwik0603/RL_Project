@@ -2,14 +2,19 @@ OVDF v1.1
 S_PlayerHealth, Assembly-CSharp
 
 # $CJw7m5GVcasTXdhRuiBeXd
-Position: $root:3
+Position: $root:1
 + [Sirenix.OdinInspector.FoldoutGroupAttribute]
 	GroupName = "References"
 
 # $9CuU9nJNbQAAPsExk4q1Me
-Position: $root:9
+Position: $root:10
 + [Sirenix.OdinInspector.FoldoutGroupAttribute]
 	GroupName = "Debug"
+
+# $UtonyEvZcEahLN51NMjYs7
+Position: $root:9
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "Animator Parameters"
 
 # playerData
 Position: $CJw7m5GVcasTXdhRuiBeXd:0
@@ -25,6 +30,18 @@ Position: $CJw7m5GVcasTXdhRuiBeXd:3
 
 # currentHealth
 Position: $9CuU9nJNbQAAPsExk4q1Me:0
++ [Sirenix.OdinInspector.ReadOnlyAttribute]
 
 # animator
 Position: $CJw7m5GVcasTXdhRuiBeXd:1
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# hudManager
+Position: $CJw7m5GVcasTXdhRuiBeXd:2
++ [Sirenix.OdinInspector.RequiredAttribute]
+
+# pIsDead
+Position: $UtonyEvZcEahLN51NMjYs7:0
+
+# pIsDamaged
+Position: $UtonyEvZcEahLN51NMjYs7:1

@@ -8,6 +8,9 @@ public class S_PlayerHealth : MonoBehaviour
 
     [SerializeField] private S_HudManager hudManager;
 
+    [SerializeField] private string pIsDead;
+    [SerializeField] private string pIsDamaged;
+
     private int maxHealth;
     [SerializeField] private int currentHealth;
 
@@ -37,21 +40,21 @@ public class S_PlayerHealth : MonoBehaviour
 
     private void Update()
     {
-        if (actions.Player.Debug.WasPressedThisFrame())
-        {
-            Takedamage(20);
-        }
+        //if (actions.Player.Debug.WasPressedThisFrame())
+        //{
+        //    Takedamage(20);
+        //}
     }
 
     private void Takedamage(int damage)
     {
-        animator.SetTrigger("IsHurt");
+        animator.SetTrigger(pIsDamaged);
         currentHealth -= damage;
         hudManager.SetHealth(currentHealth);
 
         if(currentHealth <= 0)
         {
-            animator.SetBool("IsDead", true);
+            animator.SetBool(pIsDead, true);
             playerData.canMove = false;
             playerData.isAlive = false;
         }

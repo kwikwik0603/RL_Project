@@ -154,5 +154,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::S_SlowSpell
   attackData: {fileID: 11400000, guid: df0ae337091e691408e89343699d72a4, type: 2}
-  hitVFX: {fileID: 0}
-  explosionVFX: {fileID: 0}
+  projectileLifetime: 6

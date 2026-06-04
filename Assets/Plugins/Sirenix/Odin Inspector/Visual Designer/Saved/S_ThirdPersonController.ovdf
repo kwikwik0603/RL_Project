@@ -7,6 +7,11 @@ Position: $root:0
 + [Sirenix.OdinInspector.FoldoutGroupAttribute]
 	GroupName = "Required"
 
+# $C4N9HX9SsrNorfs33wyvaq
+Position: $root:31
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "Animator Parameters"
+
 # controller
 Position: $FbG5hfc51nxd1sXVq1kfwD:0
 + [Sirenix.OdinInspector.RequiredAttribute]
@@ -20,20 +25,20 @@ Position: $FbG5hfc51nxd1sXVq1kfwD:3
 + [Sirenix.OdinInspector.RequiredAttribute]
 
 # walkSpeed
-Position: $root:23
+Position: $root:19
 
 # sprintSpeed
-Position: $root:24
+Position: $root:20
 
 # charController
 Position: $FbG5hfc51nxd1sXVq1kfwD:1
 + [Sirenix.OdinInspector.RequiredAttribute]
 
 # crouchingHeight
-Position: $root:25
+Position: $root:21
 
 # whatIsGround
-Position: $FbG5hfc51nxd1sXVq1kfwD:4
+Position: $FbG5hfc51nxd1sXVq1kfwD:5
 + [Sirenix.OdinInspector.RequiredAttribute]
 
 # jumpForce
@@ -46,10 +51,10 @@ Position: $H57diiJ83aCmEZQTfFcJih:1
 Position: $H57diiJ83aCmEZQTfFcJih:2
 
 # gravity
-Position: $root:26
+Position: $root:22
 
 # jumpHeight
-Position: $root:27
+Position: $root:23
 
 # playerData
 Position: $FbG5hfc51nxd1sXVq1kfwD:0
@@ -66,3 +71,18 @@ Position: $FbG5hfc51nxd1sXVq1kfwD:2
 # animator
 Position: $FbG5hfc51nxd1sXVq1kfwD:3
 + [Sirenix.OdinInspector.RequiredAttribute]
+
+# pHorizontal
+Position: $C4N9HX9SsrNorfs33wyvaq:0
+
+# pVertical
+Position: $C4N9HX9SsrNorfs33wyvaq:1
+
+# pIsCrouching
+Position: $C4N9HX9SsrNorfs33wyvaq:2
+
+# pIsJumping
+Position: $C4N9HX9SsrNorfs33wyvaq:3
+
+# holdCrouch
+Position: $FbG5hfc51nxd1sXVq1kfwD:4

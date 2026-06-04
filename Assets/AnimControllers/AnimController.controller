@@ -227,9 +227,6 @@ AnimatorStateTransition:
     m_ConditionEvent: IsAttacking
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: IsCrouching
-    m_EventTreshold: 0
-  - m_ConditionMode: 1
     m_ConditionEvent: SlowSpell
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
@@ -256,9 +253,6 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: IsAttacking
-    m_EventTreshold: 0
-  - m_ConditionMode: 2
-    m_ConditionEvent: IsCrouching
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: FastSpell
@@ -368,6 +362,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: IsJumping
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: IsAttacking
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6118735704907491563}
@@ -583,7 +580,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 4497943576278935587}
-    m_Position: {x: 290, y: -200, z: 0}
+    m_Position: {x: 300, y: -200, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8315586306060579080}
     m_Position: {x: 300, y: 360, z: 0}
@@ -595,7 +592,7 @@ AnimatorStateMachine:
     m_Position: {x: 900, y: 360, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3685986593439267156}
-    m_Position: {x: 1100, y: -100, z: 0}
+    m_Position: {x: 1200, y: -100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -678288940759876591}
     m_Position: {x: 1200, y: 260, z: 0}
@@ -627,8 +624,8 @@ AnimatorStateMachine:
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 630, y: 90, z: 0}
-  m_EntryPosition: {x: 300, y: -300, z: 0}
-  m_ExitPosition: {x: 300, y: -370, z: 0}
+  m_EntryPosition: {x: 320, y: -300, z: 0}
+  m_ExitPosition: {x: 320, y: -400, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 4497943576278935587}
 --- !u!1101 &-16242188737192259
@@ -683,6 +680,12 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
+  - m_Name: IsJumping
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
   - m_Name: IsAttacking
     m_Type: 4
     m_DefaultFloat: 0
@@ -708,12 +711,6 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
   - m_Name: IsDamaged
-    m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: IsJumping
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0

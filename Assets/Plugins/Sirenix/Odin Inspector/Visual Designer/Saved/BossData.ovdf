@@ -1,0 +1,29 @@
+OVDF v1.1
+BossData, Assembly-CSharp
+MetaGuid:d0d15549ed0eb1d439b220377fbffae3
+
+# $T5hNNrMLmvGwCBQk2tWfNA
+Position: $root:0
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Boss Data"
+
+# maxHealth
+Position: $T5hNNrMLmvGwCBQk2tWfNA:0
+
+# walkSpeed
+Position: $T5hNNrMLmvGwCBQk2tWfNA:1
+
+# sprintSpeed
+Position: $T5hNNrMLmvGwCBQk2tWfNA:2
+
+# jumpHeight
+Position: $T5hNNrMLmvGwCBQk2tWfNA:3
+
+# GroundLayerMask
+Position: $T5hNNrMLmvGwCBQk2tWfNA:4
+
+# canMove
+Position: $T5hNNrMLmvGwCBQk2tWfNA:5
+
+# isAlive
+Position: $T5hNNrMLmvGwCBQk2tWfNA:6

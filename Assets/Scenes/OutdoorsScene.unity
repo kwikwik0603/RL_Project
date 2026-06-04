@@ -710,6 +710,7 @@ GameObject:
   m_Component:
   - component: {fileID: 196758702}
   - component: {fileID: 196758701}
+  - component: {fileID: 196758703}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -757,6 +758,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &196758703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196758700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b330ca9d3a3884ca8b7fd5cc7bd7c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S_Boss
+  player: {fileID: 555297771}
+  bossData: {fileID: 11400000, guid: 9cd265e01771a0e4da1dd7fc70c90a98, type: 2}
+  attackData: {fileID: 11400000, guid: df0ae337091e691408e89343699d72a4, type: 2}
+  charC: {fileID: 196758701}
 --- !u!1 &432432459
 GameObject:
   m_ObjectHideFlags: 0

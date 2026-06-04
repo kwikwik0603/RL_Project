@@ -70,24 +70,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Dash",
-                    "type": "Button",
-                    "id": "1d0d81ed-a806-4157-9ecc-7f6dfb47f037",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Respawn",
-                    "type": "Button",
-                    "id": "29174f3a-0e22-4e12-b455-a6ad6490d97e",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "FastAttack",
                     "type": "Button",
                     "id": "60d78761-40a4-4db1-b3f7-44f9b81b626c",
@@ -106,18 +88,27 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Debug",
+                    "name": "AoEAttack",
                     "type": "Button",
-                    "id": "a3b1c7c7-5055-4b3e-a1ee-24db2bfeaed0",
+                    "id": "517ba2e3-2c9a-4af8-8dda-04a54a3e26ab",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Debug2",
+                    "name": "ExitAttack",
                     "type": "Button",
-                    "id": "e40625e0-a0ee-45f4-9649-da30d4be2795",
+                    "id": "57feb18c-61be-49b8-b6df-3c281eb20b74",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Fire",
+                    "type": "Button",
+                    "id": "a6f0c8c0-c3c1-45f1-8b47-1e1f08d6bc9b",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -468,30 +459,8 @@
                 },
                 {
                     "name": "",
-                    "id": "fcd5aad9-27e9-48c9-bc07-d76f263ba1d6",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "abc4e620-8dc2-44a3-b812-fceb454620ab",
-                    "path": "<Keyboard>/1",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Respawn",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "8b1610f2-fe86-48b8-9dc5-a62cb9582fc8",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Keyboard>/1",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -502,7 +471,7 @@
                 {
                     "name": "",
                     "id": "3f987736-ec2b-4aaa-87ff-0be63ba28974",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/2",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -512,23 +481,34 @@
                 },
                 {
                     "name": "",
-                    "id": "8e6b81dd-1c47-45a6-b75f-3244fa4d79a8",
-                    "path": "<Keyboard>/0",
+                    "id": "d4acb4b6-8cfb-4266-8aed-e0da907c8dca",
+                    "path": "<Keyboard>/3",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Debug",
+                    "action": "AoEAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "ff7170fe-e114-4eaf-8fc6-3038513c9a4c",
-                    "path": "<Keyboard>/9",
+                    "id": "8485262d-6287-4975-a18c-b9f561b56ffd",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Debug2",
+                    "action": "ExitAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ced776fa-2cff-4532-bfe2-c5736b411727",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

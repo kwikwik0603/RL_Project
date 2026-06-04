@@ -12,16 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025beae252f3937408df9b82d683740a, type: 3}
   m_Name: AttackData
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  maxStamina: 100
-  fastDamage: 2
-  fastThrowForce: 50
-  fastThrowUpwardForce: 0
-  fastThrowCost: 2
+  playerStamina: 0
+  bossStamina: 100
+  fastSpellDamage: 5
+  fastSpellThrowForce: 50
+  fastSpellCost: 2
   fastAttackCooldown: 1
-  slowBaseDamage: 20
+  slowBaseDamage: 15
   slowExplosionRadius: 5
-  slowExplosionForce: 500
-  slowThrowForce: 5
+  slowExplosionForce: 1000
+  slowThrowForce: 7.5
   slowThrowUpwardForce: 10
   slowThrowCost: 5
-  slowThrowCooldown: 2
+  slowThrowCooldown: 3
+  attackRange: 2
+  lightAttackDamage: 5
+  heavyAttackDamage: 15
+  heavyAttackCooldown: 3

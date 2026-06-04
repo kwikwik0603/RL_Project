@@ -14,10 +14,15 @@ public class S_Attack : MonoBehaviour
     [SerializeField] private PlayerData playerData;
     [SerializeField] private GameObject fastSpellPrefab;
 
+    [SerializeField] private string pIsAttacking;
+    [SerializeField] private string pFastSpell;
+    [SerializeField] private string pSlowSpell;
+
     [SerializeField] private S_HudManager hudManager;
 
-    private int stamina;
-
+    [SerializeField] private int stamina;
+    [SerializeField] private bool isAttacking;
+    [SerializeField] private int attackType;
     private bool readyToAttack;
 
     //input actions
@@ -40,36 +45,97 @@ public class S_Attack : MonoBehaviour
 
     void Start()
     {
-        stamina = attackData.maxStamina;
+        stamina = attackData.playerStamina;
+        if (stamina == 0) Debug.LogError("No Player Stamina");
         playerData.isAlive = true;
         readyToAttack = true;
+        isAttacking = false;
 
         hudManager.SetMaxStamina(stamina);
     }
 
     void Update()
     {
-        if (actions.Player.FastAttack.IsPressed() && readyToAttack && stamina > 2 && playerData.isAlive)
+        if (actions.Player.FastAttack.WasPressedThisFrame())
         {
-            animator.SetTrigger("FastAttack");
-            playerData.canMove = false;
-            Invoke(nameof(ResetTrigger), 0.1f);
+            isAttacking = true;
+            attackType = 1;
         }
-        if(actions.Player.SlowAttack.IsPressed() && readyToAttack && stamina > 5 && playerData.isAlive)
+        else if(actions.Player.SlowAttack.WasPressedThisFrame())
         {
-            animator.SetTrigger("SlowAttack");
-            playerData.canMove = false;
-            Invoke(nameof(ResetTrigger), 0.1f);
+            isAttacking = true;
+            attackType = 2;
         }
+        else if(actions.Player.AoEAttack.WasPressedThisFrame())
+        {
+            isAttacking = true;
+            attackType = 3;
+        }
+        else if (actions.Player.ExitAttack.WasPressedThisFrame())
+        {
+            isAttacking = false;
+        }
+
+
+
+        if(isAttacking)
+        {
+            animator.SetBool(pIsAttacking, true);
+            if (actions.Player.Fire.WasPressedThisFrame() && readyToAttack && playerData.isAlive)
+            {
+                playerData.canMove = false;
+                switch (attackType)
+                {
+                    case 1:
+                        if(stamina > 2)
+                        {
+                            animator.SetTrigger(pFastSpell);
+                        }
+                        break;
+                    case 2:
+                        if (stamina > 5)
+                        {
+                            animator.SetTrigger(pSlowSpell);
+                        }
+                        break;
+
+                    case 3:
+                        if (stamina > 10)
+                        {
+                            Debug.Log("AoE Attack");
+                        }
+                        break;
+                    default:
+                        Debug.Log("Invalid Attack");
+                        break;
+                }
+                Invoke(nameof(ResetTrigger), 0.1f);
+            }
+        }
+        else
+        {
+            animator.SetBool(pIsAttacking, false);
+        }
+        //if (actions.Player.FastAttack.IsPressed() && readyToAttack && stamina > 2 && playerData.isAlive)
+        //{
+        //    animator.SetTrigger(pFastSpell);
+        //    playerData.canMove = false;
+        //    Invoke(nameof(ResetTrigger), 0.1f);
+        //}
+        //if(actions.Player.SlowAttack.IsPressed() && readyToAttack && stamina > 5 && playerData.isAlive)
+        //{
+        //    animator.SetTrigger(pSlowSpell);
+        //    playerData.canMove = false;
+        //    Invoke(nameof(ResetTrigger), 0.1f);
+        //}
     }
 
     //called from event trigger in anim clip
     private void FastAttack()
     {
         float coolDown = attackData.fastAttackCooldown;
-        float launchForce = attackData.fastThrowForce;
-        float launchUpwardForce = attackData.fastThrowUpwardForce;
-        int cost = attackData.fastThrowCost;
+        float launchForce = attackData.fastSpellThrowForce;
+        int cost = attackData.fastSpellCost;
 
         readyToAttack = false;
 
@@ -82,7 +148,7 @@ public class S_Attack : MonoBehaviour
         GameObject projectile = Instantiate(fastSpellPrefab, attackPoint.position, launchRotation);
         Rigidbody projectileRB = projectile.GetComponent<Rigidbody>();
 
-        Vector3 forceToAdd = projectile.transform.forward * launchForce + transform.up * launchUpwardForce;
+        Vector3 forceToAdd = projectile.transform.forward * launchForce + transform.up * 0f;
         projectileRB.AddForce(forceToAdd, ForceMode.Impulse);
 
         stamina -= cost;
@@ -96,8 +162,66 @@ public class S_Attack : MonoBehaviour
         Invoke(nameof(ResetThrow), coolDown);
     }
 
+    //called from event trigger in anim clip
+    private void SlowAttack()
+    {
+        float coolDown = attackData.slowThrowCooldown;
+        float launchForce = attackData.slowThrowForce;
+        float launchUpwardForce = attackData.slowThrowUpwardForce;
+        int cost = attackData.slowThrowCost;
 
-    /*
+        readyToAttack = false;
+
+        GameObject projectile = Instantiate(slowSpellPrefab, attackPoint.position, GetCameraRotation());
+        Rigidbody projectileRB = projectile.GetComponent<Rigidbody>();
+        Vector3 forceToAdd = projectile.transform.forward * launchForce + transform.up * launchUpwardForce;
+        projectileRB.AddForce(forceToAdd, ForceMode.Impulse);
+
+        stamina -= cost;
+        hudManager.SetStamina(stamina);
+
+        Invoke(nameof(ResetThrow), coolDown);
+    }
+
+    //called from slow and fast attack
+    private void ResetThrow()
+    {
+        readyToAttack = true;
+    }
+
+    //called from update
+    private void ResetTrigger()
+    {
+        animator.ResetTrigger(pFastSpell);
+        animator.ResetTrigger(pSlowSpell);
+    }
+
+    //called from event trigger in anim clip
+    private void ResetCharController()
+    {
+
+        Debug.Log("Bool reset");
+        playerData.canMove = true;
+    }
+
+    private Quaternion GetCameraRotation()
+    {
+        float horizontalCamAngle = mainCamera.eulerAngles.y;
+        Quaternion launchRotation = Quaternion.Euler(0f, horizontalCamAngle, 0f);
+
+        return launchRotation;
+    }
+}
+
+
+
+
+
+
+
+
+
+/*
     private void FastAttack()
     {
         float coolDown = attackData.fastAttackCooldown;
@@ -124,52 +248,3 @@ public class S_Attack : MonoBehaviour
 
         Invoke(nameof(ResetThrow), coolDown);
     }*/
-
-    //called from event trigger in anim clip
-    private void SlowAttack()
-    {
-        float coolDown = attackData.slowThrowCooldown;
-        float launchForce = attackData.slowThrowForce;
-        float launchUpwardForce = attackData.slowThrowUpwardForce;
-        int cost = attackData.slowThrowCost;
-
-        readyToAttack = false;
-
-        GameObject projectile = Instantiate(slowSpellPrefab, attackPoint.position, GetCameraRotation());
-        Rigidbody projectileRB = projectile.GetComponent<Rigidbody>();
-        Vector3 forceToAdd = projectile.transform.forward * launchForce + transform.up * launchUpwardForce;
-        projectileRB.AddForce(forceToAdd, ForceMode.Impulse);
-
-        stamina -= cost;
-        hudManager.SetStamina(stamina);
-
-        Invoke(nameof(ResetThrow), coolDown);
-    }
-
-    private void ResetThrow()
-    {
-        readyToAttack = true;
-    }
-
-    private void ResetTrigger()
-    {
-        animator.ResetTrigger("FastAttack");
-        animator.ResetTrigger("SlowAttack");
-    }
-
-    //called from event trigger in anim clip
-    private void ResetCharController()
-    {
-
-        Debug.Log("Bool reset");
-        playerData.canMove = true;
-    }
-
-    private Quaternion GetCameraRotation()
-    {
-        float horizontalCamAngle = mainCamera.eulerAngles.y;
-        Quaternion launchRotation = Quaternion.Euler(0f, horizontalCamAngle, 0f);
-
-        return launchRotation;
-    }
-}

@@ -9,7 +9,7 @@ public class S_FastSpell : MonoBehaviour
     void Start()
     {
         Destroy(gameObject, projectileLifetime);
-        baseDamage = attackData.fastDamage;
+        baseDamage = attackData.fastSpellDamage;
 
     }
 
