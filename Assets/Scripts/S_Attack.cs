@@ -116,18 +116,6 @@ public class S_Attack : MonoBehaviour
         {
             animator.SetBool(pIsAttacking, false);
         }
-        //if (actions.Player.FastAttack.IsPressed() && readyToAttack && stamina > 2 && playerData.isAlive)
-        //{
-        //    animator.SetTrigger(pFastSpell);
-        //    playerData.canMove = false;
-        //    Invoke(nameof(ResetTrigger), 0.1f);
-        //}
-        //if(actions.Player.SlowAttack.IsPressed() && readyToAttack && stamina > 5 && playerData.isAlive)
-        //{
-        //    animator.SetTrigger(pSlowSpell);
-        //    playerData.canMove = false;
-        //    Invoke(nameof(ResetTrigger), 0.1f);
-        //}
     }
 
     //called from event trigger in anim clip

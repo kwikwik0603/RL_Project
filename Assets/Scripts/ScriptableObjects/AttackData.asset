@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025beae252f3937408df9b82d683740a, type: 3}
   m_Name: AttackData
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  playerStamina: 0
+  playerStamina: 100
   bossStamina: 100
   fastSpellDamage: 5
   fastSpellThrowForce: 50
