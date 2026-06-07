@@ -42,6 +42,7 @@ public class GameDataBaseWindow : OdinMenuEditorWindow
         // derived from your custom ScriptableObject templates automatically
         tree.AddAllAssetsAtPath("Player", "Assets/Scripts/ScriptableObjects", typeof(PlayerData), true);
         tree.AddAllAssetsAtPath("Attacks", "Assets/Scripts/ScriptableObjects", typeof(AttackData), true);
+        tree.AddAllAssetsAtPath("Boss", "Assets/Scripts/ScriptableObjects", typeof(BossData), true);
 
         // Sorts the list alphabetically automatically
         tree.SortMenuItemsByName();

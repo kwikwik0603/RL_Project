@@ -32,6 +32,16 @@ Position: $DVZtEYsFpsbGsfHPx3oTw:4
 + [Sirenix.OdinInspector.TitleGroupAttribute]
 	GroupName = "Prefabs"
 
+# $36BnPnQhuVZWGwT4BYh4zN
+Position: $root:14
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "Animator Parameters"
+
+# $VsTzEjp5RrBVjQVBz4vi4r
+Position: $root:15
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+	GroupName = "Debug"
+
 # cam
 Position: $DVZtEYsFpsbGsfHPx3oTw:1
 + [Sirenix.OdinInspector.RequiredAttribute]
@@ -110,3 +120,24 @@ Position: $FmRKMt6966ehkye8CDvvhu:0
 
 # fastSpellPrefab
 Position: $FmRKMt6966ehkye8CDvvhu:1
+
+# pIsAttacking
+Position: $36BnPnQhuVZWGwT4BYh4zN:0
+
+# pFastSpell
+Position: $36BnPnQhuVZWGwT4BYh4zN:1
+
+# pSlowSpell
+Position: $36BnPnQhuVZWGwT4BYh4zN:2
+
+# isAttacking
+Position: $VsTzEjp5RrBVjQVBz4vi4r:1
++ [Sirenix.OdinInspector.ReadOnlyAttribute]
+
+# attackType
+Position: $VsTzEjp5RrBVjQVBz4vi4r:2
++ [Sirenix.OdinInspector.ReadOnlyAttribute]
+
+# stamina
+Position: $VsTzEjp5RrBVjQVBz4vi4r:0
++ [Sirenix.OdinInspector.ReadOnlyAttribute]

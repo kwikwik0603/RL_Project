@@ -346,6 +346,10 @@ MonoBehaviour:
   mainCamera: {fileID: 0}
   animator: {fileID: 4018440938278960424}
   playerData: {fileID: 11400000, guid: f6d69e2094149be4cad7b004538f2da5, type: 2}
+  pHorizontal: Horizontal
+  pVertical: Vertical
+  pIsCrouching: IsCrouching
+  pIsJumping: IsJumping
   canMove: 1
   holdCrouch: 0
 --- !u!114 &8536047952498262425
@@ -369,7 +373,12 @@ MonoBehaviour:
   attackData: {fileID: 11400000, guid: df0ae337091e691408e89343699d72a4, type: 2}
   playerData: {fileID: 11400000, guid: f6d69e2094149be4cad7b004538f2da5, type: 2}
   fastSpellPrefab: {fileID: 3946868894769534851, guid: 25fa281b66d5a1740bf05234f87f8497, type: 3}
+  pIsAttacking: IsAttacking
+  pFastSpell: FastSpell
+  pSlowSpell: SlowSpell
   hudManager: {fileID: 0}
+  isAttacking: 0
+  attackType: 0
 --- !u!114 &4390617370849386312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,6 +394,8 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: f6d69e2094149be4cad7b004538f2da5, type: 2}
   animator: {fileID: 4018440938278960424}
   hudManager: {fileID: 0}
+  pIsDead: IsDead
+  pIsDamaged: IsDamaged
   currentHealth: 0
 --- !u!1001 &8199509312790149121
 PrefabInstance:

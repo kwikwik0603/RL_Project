@@ -156,24 +156,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Dash"",
-                    ""type"": ""Button"",
-                    ""id"": ""1d0d81ed-a806-4157-9ecc-7f6dfb47f037"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Respawn"",
-                    ""type"": ""Button"",
-                    ""id"": ""29174f3a-0e22-4e12-b455-a6ad6490d97e"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""FastAttack"",
                     ""type"": ""Button"",
                     ""id"": ""60d78761-40a4-4db1-b3f7-44f9b81b626c"",
@@ -192,18 +174,27 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Debug"",
+                    ""name"": ""AoEAttack"",
                     ""type"": ""Button"",
-                    ""id"": ""a3b1c7c7-5055-4b3e-a1ee-24db2bfeaed0"",
+                    ""id"": ""517ba2e3-2c9a-4af8-8dda-04a54a3e26ab"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Debug2"",
+                    ""name"": ""ExitAttack"",
                     ""type"": ""Button"",
-                    ""id"": ""e40625e0-a0ee-45f4-9649-da30d4be2795"",
+                    ""id"": ""57feb18c-61be-49b8-b6df-3c281eb20b74"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Fire"",
+                    ""type"": ""Button"",
+                    ""id"": ""a6f0c8c0-c3c1-45f1-8b47-1e1f08d6bc9b"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -554,30 +545,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""fcd5aad9-27e9-48c9-bc07-d76f263ba1d6"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Dash"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""abc4e620-8dc2-44a3-b812-fceb454620ab"",
-                    ""path"": ""<Keyboard>/1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Respawn"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""8b1610f2-fe86-48b8-9dc5-a62cb9582fc8"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -588,7 +557,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""3f987736-ec2b-4aaa-87ff-0be63ba28974"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Keyboard>/2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -598,23 +567,34 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8e6b81dd-1c47-45a6-b75f-3244fa4d79a8"",
-                    ""path"": ""<Keyboard>/0"",
+                    ""id"": ""d4acb4b6-8cfb-4266-8aed-e0da907c8dca"",
+                    ""path"": ""<Keyboard>/3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Debug"",
+                    ""action"": ""AoEAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ff7170fe-e114-4eaf-8fc6-3038513c9a4c"",
-                    ""path"": ""<Keyboard>/9"",
+                    ""id"": ""8485262d-6287-4975-a18c-b9f561b56ffd"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Debug2"",
+                    ""action"": ""ExitAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ced776fa-2cff-4532-bfe2-c5736b411727"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1209,12 +1189,11 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
-        m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
-        m_Player_Respawn = m_Player.FindAction("Respawn", throwIfNotFound: true);
         m_Player_FastAttack = m_Player.FindAction("FastAttack", throwIfNotFound: true);
         m_Player_SlowAttack = m_Player.FindAction("SlowAttack", throwIfNotFound: true);
-        m_Player_Debug = m_Player.FindAction("Debug", throwIfNotFound: true);
-        m_Player_Debug2 = m_Player.FindAction("Debug2", throwIfNotFound: true);
+        m_Player_AoEAttack = m_Player.FindAction("AoEAttack", throwIfNotFound: true);
+        m_Player_ExitAttack = m_Player.FindAction("ExitAttack", throwIfNotFound: true);
+        m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1315,12 +1294,11 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Sprint;
-    private readonly InputAction m_Player_Dash;
-    private readonly InputAction m_Player_Respawn;
     private readonly InputAction m_Player_FastAttack;
     private readonly InputAction m_Player_SlowAttack;
-    private readonly InputAction m_Player_Debug;
-    private readonly InputAction m_Player_Debug2;
+    private readonly InputAction m_Player_AoEAttack;
+    private readonly InputAction m_Player_ExitAttack;
+    private readonly InputAction m_Player_Fire;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1361,14 +1339,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Dash".
-        /// </summary>
-        public InputAction @Dash => m_Wrapper.m_Player_Dash;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/Respawn".
-        /// </summary>
-        public InputAction @Respawn => m_Wrapper.m_Player_Respawn;
-        /// <summary>
         /// Provides access to the underlying input action "Player/FastAttack".
         /// </summary>
         public InputAction @FastAttack => m_Wrapper.m_Player_FastAttack;
@@ -1377,13 +1347,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @SlowAttack => m_Wrapper.m_Player_SlowAttack;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Debug".
+        /// Provides access to the underlying input action "Player/AoEAttack".
         /// </summary>
-        public InputAction @Debug => m_Wrapper.m_Player_Debug;
+        public InputAction @AoEAttack => m_Wrapper.m_Player_AoEAttack;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Debug2".
+        /// Provides access to the underlying input action "Player/ExitAttack".
         /// </summary>
-        public InputAction @Debug2 => m_Wrapper.m_Player_Debug2;
+        public InputAction @ExitAttack => m_Wrapper.m_Player_ExitAttack;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Fire".
+        /// </summary>
+        public InputAction @Fire => m_Wrapper.m_Player_Fire;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1431,24 +1405,21 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
-            @Dash.started += instance.OnDash;
-            @Dash.performed += instance.OnDash;
-            @Dash.canceled += instance.OnDash;
-            @Respawn.started += instance.OnRespawn;
-            @Respawn.performed += instance.OnRespawn;
-            @Respawn.canceled += instance.OnRespawn;
             @FastAttack.started += instance.OnFastAttack;
             @FastAttack.performed += instance.OnFastAttack;
             @FastAttack.canceled += instance.OnFastAttack;
             @SlowAttack.started += instance.OnSlowAttack;
             @SlowAttack.performed += instance.OnSlowAttack;
             @SlowAttack.canceled += instance.OnSlowAttack;
-            @Debug.started += instance.OnDebug;
-            @Debug.performed += instance.OnDebug;
-            @Debug.canceled += instance.OnDebug;
-            @Debug2.started += instance.OnDebug2;
-            @Debug2.performed += instance.OnDebug2;
-            @Debug2.canceled += instance.OnDebug2;
+            @AoEAttack.started += instance.OnAoEAttack;
+            @AoEAttack.performed += instance.OnAoEAttack;
+            @AoEAttack.canceled += instance.OnAoEAttack;
+            @ExitAttack.started += instance.OnExitAttack;
+            @ExitAttack.performed += instance.OnExitAttack;
+            @ExitAttack.canceled += instance.OnExitAttack;
+            @Fire.started += instance.OnFire;
+            @Fire.performed += instance.OnFire;
+            @Fire.canceled += instance.OnFire;
         }
 
         /// <summary>
@@ -1481,24 +1452,21 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
-            @Dash.started -= instance.OnDash;
-            @Dash.performed -= instance.OnDash;
-            @Dash.canceled -= instance.OnDash;
-            @Respawn.started -= instance.OnRespawn;
-            @Respawn.performed -= instance.OnRespawn;
-            @Respawn.canceled -= instance.OnRespawn;
             @FastAttack.started -= instance.OnFastAttack;
             @FastAttack.performed -= instance.OnFastAttack;
             @FastAttack.canceled -= instance.OnFastAttack;
             @SlowAttack.started -= instance.OnSlowAttack;
             @SlowAttack.performed -= instance.OnSlowAttack;
             @SlowAttack.canceled -= instance.OnSlowAttack;
-            @Debug.started -= instance.OnDebug;
-            @Debug.performed -= instance.OnDebug;
-            @Debug.canceled -= instance.OnDebug;
-            @Debug2.started -= instance.OnDebug2;
-            @Debug2.performed -= instance.OnDebug2;
-            @Debug2.canceled -= instance.OnDebug2;
+            @AoEAttack.started -= instance.OnAoEAttack;
+            @AoEAttack.performed -= instance.OnAoEAttack;
+            @AoEAttack.canceled -= instance.OnAoEAttack;
+            @ExitAttack.started -= instance.OnExitAttack;
+            @ExitAttack.performed -= instance.OnExitAttack;
+            @ExitAttack.canceled -= instance.OnExitAttack;
+            @Fire.started -= instance.OnFire;
+            @Fire.performed -= instance.OnFire;
+            @Fire.canceled -= instance.OnFire;
         }
 
         /// <summary>
@@ -1849,20 +1817,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSprint(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Dash" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnDash(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Respawn" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnRespawn(InputAction.CallbackContext context);
-        /// <summary>
         /// Method invoked when associated input action "FastAttack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
@@ -1877,19 +1831,26 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSlowAttack(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Debug" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "AoEAttack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnDebug(InputAction.CallbackContext context);
+        void OnAoEAttack(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Debug2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "ExitAttack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnDebug2(InputAction.CallbackContext context);
+        void OnExitAttack(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Fire" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnFire(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

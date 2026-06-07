@@ -29,9 +29,6 @@ public class S_GameManager : MonoBehaviour
 
     void Update()
     {
-        if(actions.Player.Respawn.IsPressed())
-        {
-            player.transform.position = respawnLocation.position;
-        }
+
     }
 }
