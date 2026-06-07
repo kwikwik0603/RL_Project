@@ -24,6 +24,8 @@ Position: $T5hNNrMLmvGwCBQk2tWfNA:4
 
 # canMove
 Position: $T5hNNrMLmvGwCBQk2tWfNA:5
++ [Sirenix.OdinInspector.ReadOnlyAttribute]
 
 # isAlive
 Position: $T5hNNrMLmvGwCBQk2tWfNA:6
++ [Sirenix.OdinInspector.ReadOnlyAttribute]

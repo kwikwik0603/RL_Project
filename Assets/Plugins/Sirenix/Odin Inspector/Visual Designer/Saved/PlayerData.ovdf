@@ -1,0 +1,9 @@
+OVDF v1.1
+PlayerData, Assembly-CSharp
+MetaGuid:249a5ccf98f5b994c833a6d9aa77590e
+
+# isAlive
++ [Sirenix.OdinInspector.ReadOnlyAttribute]
+
+# canMove
++ [Sirenix.OdinInspector.ReadOnlyAttribute]

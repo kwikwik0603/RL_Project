@@ -8,13 +8,13 @@ public class AttackData : ScriptableObject
     public int playerStamina = 100;
     public int bossStamina = 100;
 
-    [Title("Fast Spell")]
+    [Title("Player - Fast Spell")]
     public float fastSpellDamage = 5f;
     public float fastSpellThrowForce = 50f;
     public int   fastSpellCost = 2;
     public float fastAttackCooldown = 1f;
 
-    [Title("Slow Spell")]
+    [Title("Player - Slow Spell")]
     public float slowBaseDamage = 15f;
     public float slowExplosionRadius = 5f;
     public float slowExplosionForce = 1000f;
