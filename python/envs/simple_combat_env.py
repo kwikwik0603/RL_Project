@@ -275,22 +275,37 @@ class SimpleCombatEnv(gym.Env):
         self.player_pos = np.clip(self.player_pos, 0.0, ARENA_SIZE)
 
     def _scripted_player_action(self) -> int:
-        """Simple scripted opponent: approach, attack when in range, block randomly."""
+        """Evasive scripted opponent: kites and repositions so the boss must
+        actively chase to land hits. A boss trained against a player that always
+        walks into it learns to camp and spam attacks — this opponent prevents
+        that by frequently backing away and strafing.
+        """
         dist = self._distance()
         rng = self.np_random
+        roll = rng.random()
 
         if dist > ATTACK_RANGE:
-            return 0  # move toward boss
-        else:
-            roll = rng.random()
-            if roll < 0.5:
-                return 4  # light attack
+            # Far: mostly keep/create distance so the boss has to close in.
+            if roll < 0.30:
+                return 0  # approach (so fights still happen)
             elif roll < 0.65:
-                return 5  # heavy attack
-            elif roll < 0.85:
-                return 6  # block
+                return 1  # back away (kite)
+            elif roll < 0.825:
+                return 2  # strafe left
             else:
-                return 7  # dodge
+                return 3  # strafe right
+        else:
+            # In range: mix of attacking, defending, and creating space.
+            if roll < 0.30:
+                return 4  # light attack
+            elif roll < 0.40:
+                return 5  # heavy attack
+            elif roll < 0.60:
+                return 6  # block
+            elif roll < 0.80:
+                return 7  # dodge (also repositions)
+            else:
+                return 1  # back away to reset spacing
 
     # ── Observations ────────────────────────────────────────────────────
 
@@ -340,9 +355,13 @@ class SimpleCombatEnv(gym.Env):
             if self.boss_hp <= 0:
                 reward += cfg.get("death", -5.0)
 
-        # r_proximity: reward/penalty based on distance
+        # r_proximity: reward PEAKS at the boss's preferred engagement range and
+        # falls off if it is too close OR too far. This gives each shadow a
+        # characteristic fighting distance instead of "closer is always better".
         dist_norm = self._distance() / ARENA_DIAGONAL
-        reward += cfg.get("proximity", 0.1) * (0.5 - dist_norm)
+        target = cfg.get("preferred_range", 0.25)
+        range_error = abs(dist_norm - target)
+        reward += cfg.get("proximity", 0.1) * (1.0 - 2.0 * range_error)
 
         # r_punish_spam: penalize repeating same action 3x in a row
         if (len(self.boss_last_actions) >= 3 and
