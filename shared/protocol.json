@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Interface contract between Unity (C# TCP server) and Python (RL client)",
   "connection": {
     "protocol": "TCP",
@@ -23,6 +23,7 @@
       "player_state": {"type": "int", "range": [0, 4], "description": "0=idle, 1=attacking, 2=blocking, 3=dodging, 4=staggered"},
       "floor_number": {"type": "int", "range": [1, 60], "description": "Current tower floor"},
       "boss_id": {"type": "int", "range": [0, 4], "description": "0=Matron, 1=Peter, 2=Nicole, 3=Sam(son), 4=Sam(friend)"},
+      "boss_recovering": {"type": "float", "range": [0.0, 1.0], "description": "Post-attack recovery/retreat phase (1=just struck, 0=ready to engage). Drives footsies."},
       "done": {"type": "bool", "description": "True if fight is over"}
     }
   },
@@ -37,7 +38,8 @@
       "4": "Light Attack",
       "5": "Heavy Attack",
       "6": "Block",
-      "7": "Dodge"
+      "7": "Dodge",
+      "8": "Idle"
     }
   },
   "commands": {

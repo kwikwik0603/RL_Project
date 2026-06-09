@@ -76,6 +76,7 @@ tower_env/
 .env
 python/models/*.zip
 python/models/*.pt
+python/logs/
 *.pt
 *.zip
 .ipynb_checkpoints/

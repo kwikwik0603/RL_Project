@@ -60,8 +60,10 @@ PETER_CONFIG = {
     "damage_taken": -0.15,     # 0.3x — barely cares about own HP
     "kill": 15.0,              # 1.5x — very kill-oriented
     "death": -5.0,
-    "proximity": 0.2,          # strongly wants to be at striking range
-    "preferred_range": 0.15,   # melee — right at attack range
+    "proximity": 0.5,          # strong spacing drive (footsies advance/retreat)
+    "preferred_range": 0.12,   # STRIKE range — close in to attack (~1.7 units)
+    "retreat_range": 0.40,     # back off here after a strike, then re-engage
+    "whiff_penalty": -0.1,     # mild — discourages far attacks without making it attack-shy
     "punish_spam": -0.3,
     "exploit_opening": 0.5,
     "challenge": -1.0,         # 0.5x — fine with quick fights

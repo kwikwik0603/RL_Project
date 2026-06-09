@@ -23,15 +23,15 @@ class UnityTowerEnv(gym.Env):
         self.port = port
         self.client = TCPClient(host, port)
 
-        # 13-dim observation: player_hp(1) + boss_hp(1) + player_pos(2) +
+        # 14-dim observation: player_hp(1) + boss_hp(1) + player_pos(2) +
         # boss_pos(2) + distance(1) + player_last_actions(3) +
-        # player_state(1) + floor_number(1) + boss_id(1)
+        # player_state(1) + floor_number(1) + boss_id(1) + boss_recovering(1)
         self.observation_space = spaces.Box(
-            low=0.0, high=1.0, shape=(13,), dtype=np.float32
+            low=0.0, high=1.0, shape=(14,), dtype=np.float32
         )
 
-        # 8 discrete actions: 0-3 movement, 4-5 attacks, 6 block, 7 dodge
-        self.action_space = spaces.Discrete(8)
+        # 9 discrete actions: 0-3 movement, 4-5 attacks, 6 block, 7 dodge, 8 idle
+        self.action_space = spaces.Discrete(9)
 
         self._last_boss_hp = 1.0
         self._last_player_hp = 1.0
@@ -70,7 +70,7 @@ class UnityTowerEnv(gym.Env):
         self.client.close()
 
     def _state_to_obs(self, state: dict) -> np.ndarray:
-        """Flatten state dict into a (13,) numpy array, all values in [0, 1]."""
+        """Flatten state dict into a (14,) numpy array, all values in [0, 1]."""
         obs = np.array([
             state["player_hp"],
             state["boss_hp"],
@@ -85,6 +85,7 @@ class UnityTowerEnv(gym.Env):
             state["player_state"] / 4.0,
             state["floor_number"] / 60.0,
             state["boss_id"] / 4.0,
+            state.get("boss_recovering", 0.0),  # post-attack retreat phase
         ], dtype=np.float32)
         return np.clip(obs, 0.0, 1.0)
 

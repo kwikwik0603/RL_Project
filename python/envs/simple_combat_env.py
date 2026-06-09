@@ -29,6 +29,7 @@ MOVE_SPEED = 1.0
 DODGE_DISTANCE = 2.0
 DODGE_IFRAMES = 1       # steps of invulnerability
 STAGGER_DURATION = 2    # steps
+RETREAT_WINDOW = 6      # steps the boss is in "post-attack recovery" (footsies)
 
 MAX_STEPS = 500
 
@@ -41,11 +42,13 @@ class SimpleCombatEnv(gym.Env):
     def __init__(self, reward_config=None, render_mode=None):
         super().__init__()
 
-        # Same obs/action space as UnityTowerEnv — policies are interchangeable
+        # Same obs/action space as UnityTowerEnv — policies are interchangeable.
+        # 14th feature = boss_recovering (post-attack retreat phase, for footsies).
         self.observation_space = spaces.Box(
-            low=0.0, high=1.0, shape=(13,), dtype=np.float32
+            low=0.0, high=1.0, shape=(14,), dtype=np.float32
         )
-        self.action_space = spaces.Discrete(8)
+        # 9 actions: 0-3 movement, 4-5 attacks, 6 block, 7 dodge, 8 idle
+        self.action_space = spaces.Discrete(9)
 
         self.reward_config = reward_config
         self.render_mode = render_mode
@@ -66,6 +69,7 @@ class SimpleCombatEnv(gym.Env):
         self.player_dodge_iframes = 0
         self.boss_stagger_timer = 0
         self.player_stagger_timer = 0
+        self.boss_post_attack_timer = 0  # >0 = recovering/retreating after a strike
 
         self.boss_last_actions = [0, 0, 0]
 
@@ -90,6 +94,7 @@ class SimpleCombatEnv(gym.Env):
         self.player_dodge_iframes = 0
         self.boss_stagger_timer = 0
         self.player_stagger_timer = 0
+        self.boss_post_attack_timer = 0
 
         self.boss_last_actions = [0, 0, 0]
 
@@ -117,6 +122,8 @@ class SimpleCombatEnv(gym.Env):
             self.boss_stagger_timer -= 1
         if self.player_stagger_timer > 0:
             self.player_stagger_timer -= 1
+        if self.boss_post_attack_timer > 0:
+            self.boss_post_attack_timer -= 1
 
         # ── Boss action (if not staggered) ──────────────────────────────
         boss_attacked = False
@@ -186,6 +193,14 @@ class SimpleCombatEnv(gym.Env):
         self.player_hp = max(0.0, self.player_hp)
         self.boss_hp = max(0.0, self.boss_hp)
 
+        # ── Footsies trigger ────────────────────────────────────────────
+        # Reaching strike range engages a strike+retreat cycle: the boss is
+        # pulled out to retreat_range for RETREAT_WINDOW steps, then re-engages.
+        # This drives a visible advance->retreat oscillation using move
+        # toward/away (both implemented in Unity), independent of attack anims.
+        if dist <= ATTACK_RANGE and self.boss_post_attack_timer == 0:
+            self.boss_post_attack_timer = RETREAT_WINDOW
+
         # ── Update action history ───────────────────────────────────────
         self.player_last_actions.pop(0)
         self.player_last_actions.append(player_action)
@@ -239,6 +254,8 @@ class SimpleCombatEnv(gym.Env):
             self.boss_pos += perp * DODGE_DISTANCE
             self.boss_dodge_iframes = DODGE_IFRAMES
             self.boss_state = 3
+        elif action == 8:  # Idle — deliberately do nothing (stance/wind-up/rhythm)
+            self.boss_state = 0
 
         if action in (4, 5):
             self.boss_state = 1  # attacking
@@ -325,6 +342,7 @@ class SimpleCombatEnv(gym.Env):
             self.player_state / 4.0,
             self.floor_number / 60.0,
             self.boss_id / 4.0,
+            self.boss_post_attack_timer / RETREAT_WINDOW,  # recovery phase (footsies)
         ], dtype=np.float32)
         return np.clip(obs, 0.0, 1.0)
 
@@ -356,12 +374,22 @@ class SimpleCombatEnv(gym.Env):
                 reward += cfg.get("death", -5.0)
 
         # r_proximity: reward PEAKS at the boss's preferred engagement range and
-        # falls off if it is too close OR too far. This gives each shadow a
-        # characteristic fighting distance instead of "closer is always better".
+        # falls off if it is too close OR too far. The target is DYNAMIC: while
+        # recovering after a strike the boss is pulled OUT to retreat_range, then
+        # back IN to preferred_range to strike again — producing footsies
+        # (advance → strike → retreat → re-engage) instead of a fixed standoff.
         dist_norm = self._distance() / ARENA_DIAGONAL
-        target = cfg.get("preferred_range", 0.25)
+        if self.boss_post_attack_timer > 0:
+            target = cfg.get("retreat_range", cfg.get("preferred_range", 0.25))
+        else:
+            target = cfg.get("preferred_range", 0.25)
         range_error = abs(dist_norm - target)
         reward += cfg.get("proximity", 0.1) * (1.0 - 2.0 * range_error)
+
+        # r_whiff: penalize committing an attack while out of range (forces the
+        # boss to actually close in to strike instead of swinging from afar).
+        if action in (4, 5) and self._distance() > ATTACK_RANGE:
+            reward += cfg.get("whiff_penalty", 0.0)
 
         # r_punish_spam: penalize repeating same action 3x in a row
         if (len(self.boss_last_actions) >= 3 and

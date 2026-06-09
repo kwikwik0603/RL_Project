@@ -44,7 +44,15 @@ public class S_BossTCPBridge : MonoBehaviour
     // 1 Unity world unit == 1 training unit (both use attackRange = 2).
     private const float TRAIN_ARENA = 10f;                 // ARENA_SIZE in training
     private const float TRAIN_DIAGONAL = 14.142f;          // 10 * sqrt(2)
+    private const float ATTACK_RANGE = 2f;                 // must match Attackdata.attackRange
+    private const int RETREAT_WINDOW = 6;                  // must match SimpleCombatEnv.RETREAT_WINDOW
     private int debugStep = 0;
+
+    // Footsies: when the policy commits a strike in range, the boss enters a
+    // recovery/retreat phase. We feed this back as the boss_recovering obs so the
+    // policy knows to back off — producing advance->strike->retreat->re-engage.
+    private int recoverTimer = 0;
+    private float lastWorldDist = 999f;
 
     // --- Networking state ---
     private TcpListener listener;
@@ -147,6 +155,8 @@ public class S_BossTCPBridge : MonoBehaviour
         Vector2 pPos = new Vector2(Mathf.Clamp01(0.5f + relX), Mathf.Clamp01(0.5f + relZ));
 
         float dist = Mathf.Clamp01(worldDist / TRAIN_DIAGONAL);
+        lastWorldDist = worldDist;
+        float bossRecovering = recoverTimer / (float)RETREAT_WINDOW;
 
         bool done = boss.currentHealth <= 0f;
 
@@ -165,6 +175,7 @@ public class S_BossTCPBridge : MonoBehaviour
         sb.Append("\"player_state\": 0, ");                // not tracked yet
         sb.Append("\"floor_number\": 1, ");
         sb.Append("\"boss_id\": 0, ");
+        sb.AppendFormat(CultureInfo.InvariantCulture, "\"boss_recovering\": {0:0.####}, ", bossRecovering);
         sb.AppendFormat("\"done\": {0}", done ? "true" : "false");
         sb.Append("}\n");
 
@@ -215,18 +226,26 @@ public class S_BossTCPBridge : MonoBehaviour
         catch { return -1; }
     }
 
-    // ----- Map protocol action (0-7) -> S_Boss.currentAction (0-3) -----
+    // ----- Map protocol action (0-8) -> S_Boss.currentAction (0-3) -----
     //
-    // Protocol:  0=toward 1=away 2=strafeL 3=strafeR 4=light 5=heavy 6=block 7=dodge
-    // S_Boss:    0=idle   1=toward 2=away   3=orbit
+    // Protocol: 0=toward 1=away 2=strafeL 3=strafeR 4=light 5=heavy 6=block 7=dodge 8=idle
+    // S_Boss:   0=idle   1=toward 2=away   3=orbit
     private void ApplyMappedAction(int protocolAction)
     {
+        // Footsies recovery timer: counts down each decision. Reaching strike
+        // range engages the strike+retreat phase (matches SimpleCombatEnv). This
+        // drives the visible advance->retreat oscillation using move toward/away.
+        if (recoverTimer > 0) recoverTimer--;
+        if (recoverTimer == 0 && lastWorldDist <= ATTACK_RANGE)
+            recoverTimer = RETREAT_WINDOW;
+
         switch (protocolAction)
         {
             case 0: boss.currentAction = 1; break;  // toward
             case 1: boss.currentAction = 2; break;  // away
             case 2: boss.currentAction = 3; break;  // strafe left  -> orbit
             case 3: boss.currentAction = 3; break;  // strafe right -> orbit
+            case 8: boss.currentAction = 0; break;  // idle (explicit, deliberate)
             case 4:
             case 5:
             case 6:
@@ -248,6 +267,7 @@ public class S_BossTCPBridge : MonoBehaviour
         boss.transform.position = bossSpawn;
         player.position = playerSpawn;
         boss.currentAction = 0;
+        recoverTimer = 0;
         Debug.Log("[BossTCPBridge] Fight reset (positions restored).");
     }
 

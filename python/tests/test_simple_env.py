@@ -182,7 +182,7 @@ def test_observation_bounds():
         obs, _, terminated, truncated, _ = env.step(action)
         assert obs.min() >= 0.0, f"  FAIL: obs has value below 0: {obs.min()}"
         assert obs.max() <= 1.0, f"  FAIL: obs has value above 1: {obs.max()}"
-        assert obs.shape == (13,), f"  FAIL: obs shape is {obs.shape}, expected (13,)"
+        assert obs.shape == (14,), f"  FAIL: obs shape is {obs.shape}, expected (14,)"
         if terminated or truncated:
             env.reset()
 
